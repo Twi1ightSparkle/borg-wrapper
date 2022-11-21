@@ -11,18 +11,20 @@ zulu_time() {
 # 1: Notify. @rooms if true
 # 2: Message content
 webhook() {
-    PAYLOAD="{\"notify\":$1,\"text\":\"$2\"}"
-    {
-        echo "Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
-        curl \
-            --location \
-            --silent \
-            --request PUT \
-            --header 'Content-Type: application/json' \
-            --data-raw "$PAYLOAD" \
-            "$BORG_WEBHOOK_URL"
-        echo ""
-    } >>"$BORG_LOG_FILE"
+    if [ "$BORG_WEBHOOK_ENABLE" ]; then
+        PAYLOAD="{\"notify\":$1,\"text\":\"$2\"}"
+        {
+            echo "Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
+            curl \
+                --location \
+                --silent \
+                --request PUT \
+                --header 'Content-Type: application/json' \
+                --data-raw "$PAYLOAD" \
+                "$BORG_WEBHOOK_URL"
+            echo ""
+        } >>"$BORG_LOG_FILE"
+    fi
 }
 
 # Test the webhook. Sends two calls, one with and one without @room
