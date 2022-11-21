@@ -77,33 +77,11 @@ else
     export BORG_REPO="$BORG_TARGET_DIRECTORY"
 fi
 
-# Check to see if we can backup
-# Stolen from https://github.com/rtrouton/CasperCheck/blob/master/script/caspercheck.sh
-# Thanks, Rich.
-check_for_network() {
-    # Determine if the network is up by looking for any non-loopback network interfaces.
-    local test
-
-    if [[ -z "${NETWORKUP:=}" ]]; then
-        test=$(ifconfig -a inet 2>/dev/null | sed -n -e '/127.0.0.1/d' -e '/0.0.0.0/d' -e '/inet/p' | wc -l)
-
-        if [[ "${test}" -gt 0 ]]; then
-            NETWORKUP="-YES-"
-        else
-            NETWORKUP="-NO-"
-        fi
-
-    fi
-}
-
-check_site_network() {
-    site_network="False"
-    ssh_check=$(ssh "${BORG_REPO}" "hostname")
-
-    if [[ "${ssh_check}" == "${BORG_REPO}" ]]; then
-        site_network="True"
-    else
-        site_network="False"
+# Test ssh connection to the target server
+test_target_connectivity() {
+    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version"; then
+        log 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN or borg not available"
+        exit 1
     fi
 }
 
