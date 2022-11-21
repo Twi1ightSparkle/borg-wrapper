@@ -12,6 +12,8 @@ source "$SCRIPT_DIR/src/borg_mount.sh"
 source "$SCRIPT_DIR/src/borg_prune.sh"
 source "$SCRIPT_DIR/src/borg_unmount.sh"
 
+check_required_programs
+
 # Load config/borg.env
 if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
     echo "Unable to load config file $SCRIPT_DIR/config/borg.env"

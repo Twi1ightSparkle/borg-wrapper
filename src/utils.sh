@@ -38,11 +38,24 @@ log() {
     fi
 }
 
-# Make sure borg is installed
-if ! command borg >/dev/null 2>&1; then
-    log 2 "Error: borg backup does not appear to be installed on $HOSTNAME"
-    exit 1
-fi
+# Make sure required programs are installed
+check_required_programs() {
+    PROGRAMS=(bash borg cat chmod curl date echo hostname ifconfig sed ssh wc)
+    MISSING=""
+    for PROGRAM in "${PROGRAMS[@]}"
+    do
+        if ! hash "$PROGRAM" &> /dev/null; then
+            MISSING+="$PROGRAM "
+        fi
+    done
+
+    LENGTH=${#MISSING}
+    if [ "$LENGTH" -gt 0 ]; then
+        echo "Some required programs missing on this system. Please install:"
+        echo "$MISSING"
+        exit 1
+    fi
+}
 
 # Set borg repo
 if [[ "$BORG_REMOTE" ]]; then
