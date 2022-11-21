@@ -67,6 +67,8 @@ elif [ "$1" = "prune" ]; then
     borg_prune
 elif [ "$1" = "unmount" ]; then
     borg_unmount
+elif [ "$1" = "testhook" ]; then
+    test_webhook
 else
     print_help
     exit 0

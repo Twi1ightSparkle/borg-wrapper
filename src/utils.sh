@@ -25,6 +25,16 @@ webhook() {
     } >>"$BORG_LOG_FILE"
 }
 
+# Test the webhook. Sends two calls, one with and one without @room
+test_webhook() {
+    if [ "$BORG_WEBHOOK_ENABLE" ]; then
+        webhook false "Webhook test from $HOSTNAME with @ room off"
+        webhook true "Webhook test from $HOSTNAME with @ room on"
+    else
+        echo "Webhook disabled in config"
+    fi
+}
+
 # Log some text to the log file. Params:
 # 1: 0 just log to file only, 1 also log to webhook, 2 also @room with webhook
 # 2: The text to log
@@ -112,6 +122,7 @@ Options:
     - *mount     id path     Mount backup with id at path
     - *prune                 Prunes the repository by deleting all archives not
                              matching any of the specified retention options
+    - testhook               Test webhook (if enabled in the config)
     - *unmount               Unmount the mounted backup
 
 Additional documentation in the README.md file or at
