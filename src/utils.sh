@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This scrfipt cannot be run on it's own. From the repo root, run ./borg.sh
+# This script cannot be run on it's own. From the repo root, run ./borg.sh
 
 # Returns the current time stamp in format 2022-07-23T14-56-03Z
 zulu_time() {
