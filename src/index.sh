@@ -23,6 +23,7 @@ fi
 source "$SCRIPT_DIR/config/borg.env"
 
 HOSTNAME=$(hostname)
+TIME_STAMP=$(zulu_time)
 export BORG_PASSPHRASE="$BORG_PASSWORD"
 
 # Set log file path
@@ -54,7 +55,7 @@ fi
 
 # Handle command line params
 if [ "$1" = "backup" ]; then
-    borg_create
+    borg_backup
 elif [ "$1" = "compact" ]; then
     borg_compact
 elif [ "$1" = "init" ]; then
