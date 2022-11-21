@@ -52,6 +52,7 @@ log() {
 
 # Make sure required programs are installed
 check_required_programs() {
+    log 0 "Checking if required programs are installed"
     PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"

@@ -9,7 +9,12 @@ borg_init() {
         exit 1
     fi
 
-    if ! borg init --encryption keyfile-blake2; then
+    log 0 "Initalizing new borg repo $BORG_REPO from host $HOSTNAME"
+
+    if ! borg init \
+        --encryption keyfile-blake2 \
+        >> "$BORG_LOG_FILE" 2>&1
+    then
         log 2 "Error initiating borg repo $BORG_REPO from host $HOSTNAME"
         exit 1
     fi
