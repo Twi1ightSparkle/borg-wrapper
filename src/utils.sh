@@ -52,7 +52,7 @@ log() {
 
 # Make sure required programs are installed
 check_required_programs() {
-    PROGRAMS=(bash borg cat chmod curl date echo hostname ifconfig sed ssh wc)
+    PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"
     do
