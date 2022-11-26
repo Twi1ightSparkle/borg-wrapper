@@ -68,8 +68,7 @@ check_required_env() {
         if [[ ! "$BORG_WEBHOOK_URL" ]]; then MISSING+="BORG_WEBHOOK_URL "; fi
     fi
 
-    LENGTH=${#MISSING}
-    if [ "$LENGTH" -gt 0 ]; then
+    if [ -n "$MISSING" ]; then
         echo "The following required options are missing from your borg.env file:"
         echo "$MISSING"
         exit 1
@@ -88,8 +87,7 @@ check_required_programs() {
         fi
     done
 
-    LENGTH=${#MISSING}
-    if [ "$LENGTH" -gt 0 ]; then
+    if [ -n "$MISSING" ]; then
         echo "Some required programs missing on this system. Please install:"
         echo "$MISSING"
         exit 1
