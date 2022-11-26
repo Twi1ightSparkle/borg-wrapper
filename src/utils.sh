@@ -110,8 +110,7 @@ check_required_programs() {
     log 0 0 "Checking if required programs are installed"
     PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
-    for PROGRAM in "${PROGRAMS[@]}"
-    do
+    for PROGRAM in "${PROGRAMS[@]}"; do
         if ! hash "$PROGRAM" &> /dev/null; then
             MISSING+="\n$PROGRAM "
         fi
@@ -123,18 +122,15 @@ check_required_programs() {
     fi
 }
 
-# Set borg repo
-if [[ "$BORG_REMOTE" ]]; then
-    export BORG_REPO="ssh://$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
-    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY"
-else
-    export BORG_REPO="$BORG_TARGET_DIRECTORY"
-fi
-
 # Test ssh connection to the target server
 test_target_connectivity() {
-    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version"; then
-        log 1 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN or borg not available"
+    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "exit"; then
+        log 1 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN"
+        exit 1
+    fi
+
+    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version >/dev/null 2>&1"; then
+        log 1 2 "borg not available on $BORG_REMOTE_DOMAIN"
         exit 1
     fi
 }

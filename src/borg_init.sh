@@ -30,7 +30,10 @@ borg_init() {
     fi
 
     if [ "$BORG_REMOTE" ]; then
-        log 1 0 "TODO: Implement remote empty dir check chech"
+        RES="$(ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
+        if [ -n "$RES" ]; then
+            ERRORS+="\nTarget directory $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY is not empty."
+        fi
     else
         if [ -d "$BORG_TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$BORG_TARGET_DIRECTORY")" ]; then
             ERRORS+="\nTarget directory $BORG_TARGET_DIRECTORY is not empty."

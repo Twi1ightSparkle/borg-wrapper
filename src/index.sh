@@ -47,6 +47,7 @@ fi
 # Set borg repo
 if [[ "$BORG_REMOTE" ]]; then
     export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
+    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY"
 else
     export BORG_REPO="$BORG_TARGET_DIRECTORY"
 fi
@@ -67,6 +68,10 @@ export TIME_STAMP
 # Dependency and config check
 check_required_programs
 check_required_env
+
+if [[ "$BORG_REMOTE" ]]; then
+    test_target_connectivity
+fi
 
 # Handle command line params
 if [ "$1" = "backup" ]; then

@@ -44,8 +44,5 @@ borg_create() {
 }
 
 borg_backup() {
-    if [[ "$BORG_REMOTE" ]]; then
-        test_target_connectivity
-    fi
     borg_create
 }
