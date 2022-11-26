@@ -83,7 +83,7 @@ log() {
 
 # Make sure required env options are set
 check_required_env() {
-    log 0 0 "Checking if required programs are installed"
+    log 0 0 "Checking if required variables are set"
     MISSING=""
 
     if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="\nBORG_BACKUP_PASSPHRASE "; fi
