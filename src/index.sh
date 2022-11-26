@@ -2,19 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Source functions
-source "$SCRIPT_DIR/src/utils.sh"
-source "$SCRIPT_DIR/src/borg_backup.sh"
-source "$SCRIPT_DIR/src/borg_compact.sh"
-source "$SCRIPT_DIR/src/borg_init.sh"
-source "$SCRIPT_DIR/src/borg_list.sh"
-source "$SCRIPT_DIR/src/borg_mount.sh"
-source "$SCRIPT_DIR/src/borg_prune.sh"
-source "$SCRIPT_DIR/src/borg_unmount.sh"
-
-check_required_programs
-
-# Load config/borg.env
+# Load and test config/borg.env
 if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
     echo "Unable to load config file $SCRIPT_DIR/config/borg.env"
     echo "Copy config.sample to config, then edit borg.env"
@@ -22,9 +10,9 @@ if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
 fi
 source "$SCRIPT_DIR/config/borg.env"
 
+# Set static vars
 HOSTNAME=$(hostname)
-TIME_STAMP=$(zulu_time)
-export BORG_PASSPHRASE="$BORG_PASSWORD"
+export BORG_PASSPHRASE="$BORG_BACKUP_PASSPHRASE"
 
 # Set log file path
 if [[ ! "$BORG_LOG_FILE" ]]; then
@@ -52,6 +40,21 @@ if [[ "$BORG_REMOTE" ]]; then
 else
     export BORG_REPO="$BORG_TARGET_DIRECTORY"
 fi
+
+# Source functions
+source "$SCRIPT_DIR/src/utils.sh"
+source "$SCRIPT_DIR/src/borg_backup.sh"
+source "$SCRIPT_DIR/src/borg_compact.sh"
+source "$SCRIPT_DIR/src/borg_init.sh"
+source "$SCRIPT_DIR/src/borg_list.sh"
+source "$SCRIPT_DIR/src/borg_mount.sh"
+source "$SCRIPT_DIR/src/borg_prune.sh"
+source "$SCRIPT_DIR/src/borg_unmount.sh"
+
+TIME_STAMP=$(zulu_time)
+
+# Dependency check
+check_required_programs
 
 # Handle command line params
 if [ "$1" = "backup" ]; then
