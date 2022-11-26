@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+source "$SCRIPT_DIR/src/parse_args.sh"
+
 # Load and test config/borg.env
 if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
     echo -e "Unable to load config file $SCRIPT_DIR/config/borg.env\nCopy config.sample to config, then edit borg.env"
@@ -28,7 +30,7 @@ source "$SCRIPT_DIR/config/borg.env"
 # Set static vars
 HOSTNAME=$(hostname)
 export BORG_PASSPHRASE="$BORG_BACKUP_PASSPHRASE"
-if [ "$2" = "automated" ]; then
+if [ "$param_automated" ]; then
     export AUTOMATED=1
 fi
 
@@ -76,27 +78,28 @@ if [[ "$BORG_REMOTE" ]]; then
     test_target_connectivity
 fi
 
-# Handle command line params
-if [ "$1" = "backup" ]; then
-    borg_backup
-elif [ "$1" = "compact" ]; then
-    borg_compact
-elif [ "$1" = "init" ]; then
-    borg_init
-elif [ "$1" = "list" ]; then
-    borg_list
-elif [ "$1" = "mount" ]; then
-    borg_mount
-elif [ "$1" = "prune" ]; then
-    borg_prune
-elif [ "$1" = "unmount" ]; then
-    borg_unmount
-elif [ "$1" = "testhook" ]; then
-    test_webhook
-elif [ "$1" = "version" ]; then
+# Run functions based on supplied command line option
+if [ "$param_version" ]; then
     echo "$PROGRAM_NAME $PROGRAM_VERSION"
     borg --version
+elif [ "$param_help" ]; then
+    print_help
+elif [ "$param_backup" ]; then
+    borg_backup
+elif [ "$param_compact" ]; then
+    borg_compact
+elif [ "$param_init" ]; then
+    borg_init
+elif [ "$param_list" ]; then
+    borg_list
+elif [ "$param_mount" ]; then
+    borg_mount
+elif [ "$param_prune" ]; then
+    borg_prune
+elif [ "$param_unmount" ]; then
+    borg_unmount
+elif [ "$param_testhook" ]; then
+    test_webhook
 else
     print_help
-    exit 0
 fi

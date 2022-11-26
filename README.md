@@ -28,8 +28,8 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Copy the `sample.config` directory to `config`
 - Edit `config/borg.env` and add your config options
 - Edit `exclude.txt` and `include.txt` with your requirements. One entry per line
-- From the root of the repo, run `./borg.sh init` to initialize the repo
-- Use crontab (or the scheduler of your choice) to run `./borg.sh backup automated` periodically
+- From the root of the repo, run `./borg.sh --init` to initialize the repo
+- Use crontab (or the scheduler of your choice) to run `./borg.sh --backup --automated` periodically
 
 ## env file
 

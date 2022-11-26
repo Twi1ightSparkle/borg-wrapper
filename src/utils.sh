@@ -140,23 +140,23 @@ print_help() {
     cat <<EOF
 $PROGRAM_NAME
 
-Usage: ./borg.sh OPTION [params] [automated]
+Usage: ./borg.sh <command> [options]
 
-Options:
-    * = not yet implemented
-    - *backup                Create new backup
-    - *compact               Free up repository space by compacting segments
-    - help                   This help text
-    - init                   Initialize a new backup repository
-    - *list                  List all backups
-    - *mount     id path     Mount backup with id at path
-    - *prune                 Prunes the repository by deleting all archives not
-                             matching any of the specified retention options
-    - testhook               Test webhook (if enabled in the config)
-    - version                Print version number
-    - *unmount               Unmount the mounted backup
+commands:
+    -b, --backup            Create new backup
+    -c, --compact           Free up repository space by compacting segments
+    -i, --init              Initialize a new backup repository
+    -l, --list              List all backups
+    -m, --mount ID PATH     Mount backup with ID at PATH
+    -p, --prune             Prunes the repository by deleting all archives not
+    -u, --unmount           Unmount the mounted backup
 
-Adding option automated disables all log messages to stdout.
+options:
+    -a, --automated         Disable most log messages to the console
+    -h, --help              This help text
+                            matching any of the specified retention options
+    -t, --testhook          Test webhook (if enabled in the config)
+    -v, --version           Print version number
 
 Additional documentation in the README.md file or at
 https://github.com/twi1ightsparkle/borg
