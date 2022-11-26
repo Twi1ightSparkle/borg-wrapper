@@ -66,22 +66,21 @@ check_required_env() {
     log 0 0 "Checking if required programs are installed"
     MISSING=""
 
-    if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="BORG_BACKUP_PASSPHRASE "; fi
-    if [[ ! "$BORG_TARGET_DIRECTORY" ]]; then MISSING+="BORG_TARGET_DIRECTORY "; fi
+    if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="\nBORG_BACKUP_PASSPHRASE "; fi
+    if [[ ! "$BORG_TARGET_DIRECTORY" ]]; then MISSING+="\nBORG_TARGET_DIRECTORY "; fi
 
     if [ "$BORG_REMOTE" ]; then
-        if [[ ! "$BORG_REMOTE_DOMAIN" ]]; then MISSING+="BORG_REMOTE_DOMAIN "; fi
-        if [[ ! "$BORG_REMOTE_USER" ]]; then MISSING+="BORG_REMOTE_USER "; fi
-        if [[ ! "$BORG_SSH_PRIVKEY" ]]; then MISSING+="BORG_SSH_PRIVKEY "; fi
+        if [[ ! "$BORG_REMOTE_DOMAIN" ]]; then MISSING+="\nBORG_REMOTE_DOMAIN "; fi
+        if [[ ! "$BORG_REMOTE_USER" ]]; then MISSING+="\nBORG_REMOTE_USER "; fi
+        if [[ ! "$BORG_SSH_PRIVKEY" ]]; then MISSING+="\nBORG_SSH_PRIVKEY "; fi
     fi
 
     if [ "$BORG_WEBHOOK_ENABLE" ]; then
-        if [[ ! "$BORG_WEBHOOK_URL" ]]; then MISSING+="BORG_WEBHOOK_URL "; fi
+        if [[ ! "$BORG_WEBHOOK_URL" ]]; then MISSING+="\nBORG_WEBHOOK_URL "; fi
     fi
 
     if [ -n "$MISSING" ]; then
-        echo "The following required options are missing from your borg.env file:"
-        echo "$MISSING"
+        echo -e "The following required options are missing from your borg.env file:$MISSING"
         exit 1
     fi
 }
@@ -94,13 +93,12 @@ check_required_programs() {
     for PROGRAM in "${PROGRAMS[@]}"
     do
         if ! hash "$PROGRAM" &> /dev/null; then
-            MISSING+="$PROGRAM "
+            MISSING+="\n$PROGRAM "
         fi
     done
 
     if [ -n "$MISSING" ]; then
-        echo "Some required programs missing on this system. Please install:"
-        echo "$MISSING"
+        echo -e "Some required programs missing on this system. Please install:$MISSING"
         exit 1
     fi
 }
