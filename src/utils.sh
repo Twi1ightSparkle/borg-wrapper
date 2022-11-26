@@ -45,17 +45,19 @@ log() {
     PRINT="$1"
     HOOK="$2"
     MESSAGE="$3"
+    # Replace all newlines (\n) with a space
+    MESSAGE_ONE_LINE=${MESSAGE//\\n/ }
 
-    echo "$(zulu_time) $MESSAGE" >>"$BORG_LOG_FILE"
+    echo "$(zulu_time) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
 
     if [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"
     fi
 
     if [ "$HOOK" = 1 ]; then
-        webhook false "$MESSAGE"
+        webhook false "$MESSAGE_ONE_LINE"
     elif [ "$HOOK" = 2 ]; then
-        webhook true "$MESSAGE"
+        webhook true "$MESSAGE_ONE_LINE"
     fi
 }
 
