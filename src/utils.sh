@@ -50,7 +50,7 @@ log() {
 
     echo "$(zulu_time) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
 
-    if [ "$PRINT" = 1 ]; then
+    if [ ! "$AUTOMATED" ] && [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"
     fi
 
@@ -80,7 +80,7 @@ check_required_env() {
     fi
 
     if [ -n "$MISSING" ]; then
-        echo -e "The following required options are missing from your borg.env file:$MISSING"
+        log 1 0 "The following required options are missing from your borg.env file:$MISSING"
         exit 1
     fi
 }
@@ -98,7 +98,7 @@ check_required_programs() {
     done
 
     if [ -n "$MISSING" ]; then
-        echo -e "Some required programs missing on this system. Please install:$MISSING"
+        log 1 0 "Some required programs missing on this system. Please install:$MISSING"
         exit 1
     fi
 }
@@ -124,7 +124,7 @@ print_help() {
     cat <<EOF
 $PROGRAM_NAME
 
-Usage: ./borg.sh OPTION [params]
+Usage: ./borg.sh OPTION [params] [automated]
 
 Options:
     * = not yet implemented
@@ -139,6 +139,8 @@ Options:
     - testhook               Test webhook (if enabled in the config)
     - version                Print version number
     - *unmount               Unmount the mounted backup
+
+Adding option automated disables all log messages to stdout.
 
 Additional documentation in the README.md file or at
 https://github.com/twi1ightsparkle/borg

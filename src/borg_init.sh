@@ -14,7 +14,7 @@ borg_init() {
     fi
 
     if [ "$BORG_REMOTE" ]; then
-        echo "TODO: Implement remote empty dir check chech"
+        log 1 0 "TODO: Implement remote empty dir check chech"
     else
         if [ -d "$BORG_TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$BORG_TARGET_DIRECTORY")" ]; then
             ERRORS+="\nTarget directory $BORG_TARGET_DIRECTORY is not empty."

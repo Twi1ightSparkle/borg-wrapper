@@ -4,8 +4,7 @@
 
 # Load and test config/borg.env
 if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
-    echo "Unable to load config file $SCRIPT_DIR/config/borg.env"
-    echo "Copy config.sample to config, then edit borg.env"
+    echo -e "Unable to load config file $SCRIPT_DIR/config/borg.env\nCopy config.sample to config, then edit borg.env"
     exit 1
 fi
 source "$SCRIPT_DIR/config/borg.env"
@@ -13,6 +12,9 @@ source "$SCRIPT_DIR/config/borg.env"
 # Set static vars
 HOSTNAME=$(hostname)
 export BORG_PASSPHRASE="$BORG_BACKUP_PASSPHRASE"
+if [ "$2" = "automated" ]; then
+    export AUTOMATED=1
+fi
 
 # Set log file path
 if [[ ! "$BORG_LOG_FILE" ]]; then
