@@ -38,21 +38,30 @@ test_webhook() {
 }
 
 # Log some text to the log file. Params:
-# 1: 0 just log to file only, 1 also log to webhook, 2 also @room with webhook
-# 2: The text to log
+# 1: 0 log to file only, 1 also print to console
+# 2: 0 do not log to webhook, 1 log to webhook, 2 also @room with webhook
+# 3: The text to log
 log() {
-    echo "$(zulu_time) $2" >>"$BORG_LOG_FILE"
+    PRINT="$1"
+    HOOK="$2"
+    MESSAGE="$3"
 
-    if [ "$1" = 1 ]; then
-        webhook false "$2"
-    elif [ "$1" = 2 ]; then
-        webhook true "$2"
+    echo "$(zulu_time) $MESSAGE" >>"$BORG_LOG_FILE"
+
+    if [ "$PRINT" = 1 ]; then
+        echo -e "$MESSAGE"
+    fi
+
+    if [ "$HOOK" = 1 ]; then
+        webhook false "$MESSAGE"
+    elif [ "$HOOK" = 2 ]; then
+        webhook true "$MESSAGE"
     fi
 }
 
 # Make sure required env options are set
 check_required_env() {
-    log 0 "Checking if required programs are installed"
+    log 0 0 "Checking if required programs are installed"
     MISSING=""
 
     if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="BORG_BACKUP_PASSPHRASE "; fi
@@ -77,7 +86,7 @@ check_required_env() {
 
 # Make sure required programs are installed
 check_required_programs() {
-    log 0 "Checking if required programs are installed"
+    log 0 0 "Checking if required programs are installed"
     PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"
@@ -105,7 +114,7 @@ fi
 # Test ssh connection to the target server
 test_target_connectivity() {
     if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version"; then
-        log 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN or borg not available"
+        log 0 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN or borg not available"
         exit 1
     fi
 }

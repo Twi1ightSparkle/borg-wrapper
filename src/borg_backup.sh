@@ -5,7 +5,7 @@
 # Create a backup
 borg_create() {
     BACKUP_NAME="$HOSTNAME"-"$TIME_STAMP"
-    log 1 "Creating backup of $HOSTNAME to $BORG_REPO::$BACKUP_NAME"
+    log 1 1 "Creating backup of $HOSTNAME to $BORG_REPO::$BACKUP_NAME"
     if ! borg create \
         --one-file-system \
         --warning \
@@ -20,11 +20,11 @@ borg_create() {
         >> "$BORG_LOG_FILE" 2>&1
         # --patterns-from "$SCRIPT_DIR/config/include.txt" \
     then
-        log 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
+        log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
         exit 1
     fi
 
-    log 1 "Successfully backed up $HOSTNAME to $BORG_REPO::$BACKUP_NAME"
+    log 1 1 "Successfully backed up $HOSTNAME to $BORG_REPO::$BACKUP_NAME"
 }
 
 borg_backup() {
