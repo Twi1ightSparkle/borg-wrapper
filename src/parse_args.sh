@@ -25,6 +25,7 @@ while [[ $# -gt 0 ]]; do
     -a | --automated)   export param_automated=true;   shift            ;;
     -b | --backup)      export param_backup=true;      shift            ;;
     -c | --compact)     export param_compact=true;     shift            ;;
+    -C | --config)      export BORG_CONFIG_PATH="$2";  shift; shift     ;;
     -h | --help)        export param_help=true;        shift            ;;
     -i | --init)        export param_init=true;        shift            ;;
     -l | --list)        export param_list=true;        shift            ;;

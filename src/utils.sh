@@ -153,6 +153,7 @@ commands:
 
 options:
     -a, --automated         Disable most log messages to the console
+    -C, --config            Full path to config (env) file
     -h, --help              This help text
                             matching any of the specified retention options
     -t, --testhook          Test webhook (if enabled in the config)

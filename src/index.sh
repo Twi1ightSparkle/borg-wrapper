@@ -21,11 +21,14 @@
 source "$SCRIPT_DIR/src/parse_args.sh"
 
 # Load and test config/borg.env
-if [ ! -f "$SCRIPT_DIR/config/borg.env" ]; then
-    echo -e "Unable to load config file $SCRIPT_DIR/config/borg.env\nCopy config.sample to config, then edit borg.env"
+if [[ ! "$BORG_CONFIG_PATH" ]]; then
+    BORG_CONFIG_PATH="$SCRIPT_DIR/config/borg.env"
+fi
+if [ ! -f "$BORG_CONFIG_PATH" ]; then
+    echo -e "Unable to load config file $BORG_CONFIG_PATH\nCopy config.sample to config, then edit borg.env"
     exit 1
 fi
-source "$SCRIPT_DIR/config/borg.env"
+source "$BORG_CONFIG_PATH"
 
 # Set static vars
 HOSTNAME=$(hostname)

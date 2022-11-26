@@ -30,6 +30,7 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Edit `exclude.txt` and `include.txt` with your requirements. One entry per line
 - From the root of the repo, run `./borg.sh --init` to initialize the repo
 - Use crontab (or the scheduler of your choice) to run `./borg.sh --backup --automated` periodically
+- If you need to run multiple profiles, you can use the `--config` option to specify different config files
 
 ## env file
 
