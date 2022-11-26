@@ -4,28 +4,41 @@
 
 # Initialize borg backup repo.
 borg_init() {
-    log 0 "Initalizing new borg repo $BORG_REPO from host $HOSTNAME"
+    log 1 1 "Initalizing new borg repo $BORG_REPO"
+
+    # Checks
+    ERRORS=""
 
     if [ -f "$BORG_KEY_FILE" ]; then
-        msg="Error, keyfile already exists. $BORG_KEY_FILE"
-        log 2 "$msg"
-        echo "$msg"
+        ERRORS+="\nKeyfile $BORG_KEY_FILE already exists."
+    fi
+
+    if [ "$BORG_REMOTE" ]; then
+        echo "TODO: Implement remote empty dir check chech"
+    else
+        if [ -d "$BORG_TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$BORG_TARGET_DIRECTORY")" ]; then
+            ERRORS+="\nTarget directory $BORG_TARGET_DIRECTORY is not empty."
+        fi
+    fi
+
+    if [ -n "$ERRORS" ]; then
+        log 1 2 "Unable to initialize Borg repo:$ERRORS"
         exit 1
     fi
 
+    # Initialize Borg repo
     if ! borg init \
         --encryption keyfile-blake2 \
         >> "$BORG_LOG_FILE" 2>&1
     then
-        log 2 "Error initiating borg repo $BORG_REPO from host $HOSTNAME"
+        log 1 2 "Error initiating borg repo $BORG_REPO"
         exit 1
     fi
 
-    chmod 600 "$BORG_KEY_FILE"
+    # Protect the keyfile
+    if ! chmod 600 "$BORG_KEY_FILE"; then
+        log 1 2 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600."
+    fi
 
-    echo ""
-    msg="Successfully initiated borg repo $BORG_REPO from host $HOSTNAME"
-    log 1 "$msg"
-    echo "$msg"
-    echo "Make sure to backup your password and the key file: $BORG_KEY_FILE"
+    log 1 1 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"
 }
