@@ -52,6 +52,7 @@ source "$SCRIPT_DIR/src/borg_prune.sh"
 source "$SCRIPT_DIR/src/borg_unmount.sh"
 
 TIME_STAMP=$(zulu_time)
+export TIME_STAMP
 
 # Dependency check
 check_required_programs
