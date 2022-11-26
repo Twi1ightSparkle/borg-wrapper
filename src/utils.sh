@@ -14,7 +14,7 @@ webhook() {
     if [ "$BORG_WEBHOOK_ENABLE" ]; then
         PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
-            echo "Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
+            echo "$(zulu_time) Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
             curl \
                 --location \
                 --silent \
