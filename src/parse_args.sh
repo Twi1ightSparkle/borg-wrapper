@@ -20,20 +20,26 @@
 
 POSITIONAL_ARGS=()
 
+# If no command line arguments was passed
+if [ $# = 0 ]; then
+    print_help
+    exit 0
+fi
+
 while [[ $# -gt 0 ]]; do
     case $1 in
-    -a | --automated)   export param_automated=true;   shift            ;;
-    -b | --backup)      export param_backup=true;      shift            ;;
-    -c | --compact)     export param_compact=true;     shift            ;;
-    -C | --config)      export BORG_CONFIG_PATH="$2";  shift; shift     ;;
-    -d | --delete)      export param_delete=true;      shift            ;;
-    -h | --help)        export param_help=true;        shift            ;;
-    -i | --init)        export param_init=true;        shift            ;;
-    -l | --list)        export param_list=true;        shift            ;;
-    -p | --prune)       export param_prune=true;       shift            ;;
-    -t | --testhook)    export param_testhook=true;    shift            ;;
-    -u | --unmount)     export param_unmount=true;     shift            ;;
-    -v | --version)     export param_version=true;     shift            ;;
+    -a | --automated)   export param_automated=true;    shift           ;;
+    -b | --backup)      export param_backup=true;       shift           ;;
+    -c | --compact)     export param_compact=true;      shift           ;;
+    -C | --config)      export BORG_CONFIG_PATH="$2";   shift; shift    ;;
+    -d | --delete)      export param_delete=true;       shift           ;;
+    -h | --help)        print_help;                     exit 0          ;;
+    -i | --init)        export param_init=true;         shift           ;;
+    -l | --list)        export param_list=true;         shift           ;;
+    -p | --prune)       export param_prune=true;        shift           ;;
+    -t | --testhook)    export param_testhook=true;     shift           ;;
+    -u | --unmount)     export param_unmount=true;      shift           ;;
+    -v | --version)     export param_version=true;      shift           ;;
     -m | --mount)
         export param_mount=true
         export param_mount_id="$2"
@@ -42,8 +48,8 @@ while [[ $# -gt 0 ]]; do
         ;;
     -*)
         echo "Unknown option $1."
-        param_help=true
-        shift
+        print_help
+        exit 1
         ;;
     *)
         POSITIONAL_ARGS+=("$1") # save positional arg

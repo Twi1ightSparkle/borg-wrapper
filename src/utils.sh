@@ -134,36 +134,3 @@ test_target_connectivity() {
         exit 1
     fi
 }
-
-# Print help text
-print_help() {
-    cat <<EOF
-$PROGRAM_NAME
-
-Usage: ./borg.sh <command> [options]
-
-commands:
-    -b, --backup            Create new backup
-    -c, --compact           Free up repository space by compacting segments
-    -d, --delete ID         Delete backup with ID
-    -i, --init              Initialize a new backup repository
-    -l, --list              List all backups
-    -m, --mount ID PATH     Mount backup with ID at PATH
-    -p, --prune             Prunes the repository by deleting all archives not
-    -u, --unmount           Unmount the mounted backup
-
-options:
-    -a, --automated         Disable most log messages to the console
-    -C, --config            Full path to config (env) file
-    -h, --help              This help text
-                            matching any of the specified retention options
-    -t, --testhook          Test webhook (if enabled in the config)
-    -v, --version           Print version number
-
-Additional documentation in the README.md file or at
-https://github.com/twi1ightsparkle/borg
-
-Maintained by Twilight Sparkle
-Version $PROGRAM_VERSION
-EOF
-}
