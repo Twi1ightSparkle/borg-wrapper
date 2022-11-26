@@ -91,6 +91,8 @@ elif [ "$param_backup" ]; then
     borg_backup
 elif [ "$param_compact" ]; then
     borg_compact
+elif [ "$param_delete" ]; then
+    borg_delete
 elif [ "$param_init" ]; then
     borg_init
 elif [ "$param_list" ]; then

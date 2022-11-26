@@ -145,6 +145,7 @@ Usage: ./borg.sh <command> [options]
 commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
+    -d, --delete ID         Delete backup with ID
     -i, --init              Initialize a new backup repository
     -l, --list              List all backups
     -m, --mount ID PATH     Mount backup with ID at PATH
