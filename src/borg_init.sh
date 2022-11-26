@@ -4,12 +4,14 @@
 
 # Initialize borg backup repo.
 borg_init() {
+    log 0 "Initalizing new borg repo $BORG_REPO from host $HOSTNAME"
+
     if [ -f "$BORG_KEY_FILE" ]; then
-        echo "Error, keyfile already exists. $BORG_KEY_FILE"
+        msg="Error, keyfile already exists. $BORG_KEY_FILE"
+        log 2 "$msg"
+        echo "$msg"
         exit 1
     fi
-
-    log 0 "Initalizing new borg repo $BORG_REPO from host $HOSTNAME"
 
     if ! borg init \
         --encryption keyfile-blake2 \
