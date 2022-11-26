@@ -89,7 +89,7 @@ test_target_connectivity() {
 # Print help text
 print_help() {
     cat <<EOF
-Borg backup runner
+$PROGRAM_NAME
 
 Usage: ./borg.sh OPTION [params]
 
@@ -104,12 +104,13 @@ Options:
     - *prune                 Prunes the repository by deleting all archives not
                              matching any of the specified retention options
     - testhook               Test webhook (if enabled in the config)
+    - version                Print version number
     - *unmount               Unmount the mounted backup
 
 Additional documentation in the README.md file or at
 https://github.com/twi1ightsparkle/borg
 
 Maintained by Twilight Sparkle
-Version 1.0.0
+Version $PROGRAM_VERSION
 EOF
 }

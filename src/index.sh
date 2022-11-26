@@ -70,6 +70,9 @@ elif [ "$1" = "unmount" ]; then
     borg_unmount
 elif [ "$1" = "testhook" ]; then
     test_webhook
+elif [ "$1" = "version" ]; then
+    echo "$PROGRAM_NAME $PROGRAM_VERSION"
+    borg --version
 else
     print_help
     exit 0
