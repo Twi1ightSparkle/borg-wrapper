@@ -64,6 +64,10 @@ check_required_env() {
         if [[ ! "$BORG_SSH_PRIVKEY" ]]; then MISSING+="BORG_SSH_PRIVKEY "; fi
     fi
 
+    if [ "$BORG_WEBHOOK_ENABLE" ]; then
+        if [[ ! "$BORG_WEBHOOK_URL" ]]; then MISSING+="BORG_WEBHOOK_URL "; fi
+    fi
+
     LENGTH=${#MISSING}
     if [ "$LENGTH" -gt 0 ]; then
         echo "The following required options are missing from your borg.env file:"
