@@ -12,7 +12,7 @@ zulu_time() {
 # 2: Message content
 webhook() {
     if [ "$BORG_WEBHOOK_ENABLE" ]; then
-        PAYLOAD="{\"notify\":$1,\"text\":\"$2\"}"
+        PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
             echo "Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
             curl \
