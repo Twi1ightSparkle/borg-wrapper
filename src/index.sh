@@ -27,15 +27,7 @@ else
 fi
 
 # Set borg repo
-if [[ ! "$BORG_TARGET_DIRECTORY" ]]; then
-    echo "BORG_TARGET_DIRECTORY must be configured"
-    exit 1
-fi
 if [[ "$BORG_REMOTE" ]]; then
-    if [[ ! "$BORG_REMOTE_DOMAIN" || ! "$BORG_REMOTE_USER" || ! "$BORG_SSH_PRIVKEY" ]]; then
-        echo "BORG_REMOTE_DOMAIN, BORG_REMOTE_USER, and BORG_SSH_PRIVKEY must be configured"
-        exit 1
-    fi
     export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
 else
     export BORG_REPO="$BORG_TARGET_DIRECTORY"
@@ -54,8 +46,9 @@ source "$SCRIPT_DIR/src/borg_unmount.sh"
 TIME_STAMP=$(zulu_time)
 export TIME_STAMP
 
-# Dependency check
+# Dependency and config check
 check_required_programs
+check_required_env
 
 # Handle command line params
 if [ "$1" = "backup" ]; then

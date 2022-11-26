@@ -50,6 +50,28 @@ log() {
     fi
 }
 
+# Make sure required env options are set
+check_required_env() {
+    log 0 "Checking if required programs are installed"
+    MISSING=""
+
+    if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="BORG_BACKUP_PASSPHRASE "; fi
+    if [[ ! "$BORG_TARGET_DIRECTORY" ]]; then MISSING+="BORG_TARGET_DIRECTORY "; fi
+
+    if [ "$BORG_REMOTE" ]; then
+        if [[ ! "$BORG_REMOTE_DOMAIN" ]]; then MISSING+="BORG_REMOTE_DOMAIN "; fi
+        if [[ ! "$BORG_REMOTE_USER" ]]; then MISSING+="BORG_REMOTE_USER "; fi
+        if [[ ! "$BORG_SSH_PRIVKEY" ]]; then MISSING+="BORG_SSH_PRIVKEY "; fi
+    fi
+
+    LENGTH=${#MISSING}
+    if [ "$LENGTH" -gt 0 ]; then
+        echo "The following required options are missing from your borg.env file:"
+        echo "$MISSING"
+        exit 1
+    fi
+}
+
 # Make sure required programs are installed
 check_required_programs() {
     log 0 "Checking if required programs are installed"
