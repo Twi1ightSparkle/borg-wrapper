@@ -2,9 +2,13 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Returns the current time stamp in format 2022-07-23T14-56-03Z
-zulu_time() {
-    date -u "+%Y-%m-%dT%H-%M-%SZ"
+# Returns the current time stamp in format 2022-11-26T18:32:49.564Z
+iso_time_stamp() {
+    NANOSECONDS="$(date "+%N")"
+    MILLISECONDS="$((NANOSECONDS / 1000000))"
+    DATE="$(date -u "+%Y-%m-%dT%H:%M:%S")"
+    Z="Z"
+    echo "$DATE.$MILLISECONDS$Z"
 }
 
 # Send a message to the webhook. Params:
@@ -14,7 +18,7 @@ webhook() {
     if [ "$BORG_WEBHOOK_ENABLE" ]; then
         PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
-            echo "$(zulu_time) Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
+            echo "$(iso_time_stamp) Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
             curl \
                 --location \
                 --silent \
@@ -48,7 +52,7 @@ log() {
     # Replace all newlines (\n) with a space
     MESSAGE_ONE_LINE=${MESSAGE//\\n/ }
 
-    echo "$(zulu_time) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
+    echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
 
     if [ ! "$AUTOMATED" ] && [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"

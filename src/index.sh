@@ -45,7 +45,7 @@ source "$SCRIPT_DIR/src/borg_mount.sh"
 source "$SCRIPT_DIR/src/borg_prune.sh"
 source "$SCRIPT_DIR/src/borg_unmount.sh"
 
-TIME_STAMP=$(zulu_time)
+TIME_STAMP=$(iso_time_stamp)
 export TIME_STAMP
 
 # Dependency and config check
