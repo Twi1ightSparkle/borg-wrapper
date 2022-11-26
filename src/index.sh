@@ -46,8 +46,11 @@ fi
 
 # Set borg repo
 if [[ "$BORG_REMOTE" ]]; then
+    if [[ ! "$BORG_REMOTE_PORT" ]]; then
+        BORG_REMOTE_PORT=22
+    fi
     export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
-    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY"
+    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY -p $BORG_REMOTE_PORT"
 else
     export BORG_REPO="$BORG_TARGET_DIRECTORY"
 fi

@@ -46,6 +46,7 @@ All options are prefixed with `BORG_`. It's just removed below to make the table
 | `LOG_FILE`          | `scriptDir/borg.log`       | No           | Full path to the script log file                                                                                            |
 | `REMOTE`            | `false`                    | No           | Back up to a remote target over SSH                                                                                         |
 | `REMOTE_DOMAIN`     | n/a                        | <sup>1</sup> | FQDN or IP of the Borg backup server/target                                                                                 |
+| `REMOTE_PORT`       | 22                         | No           | Port to connect to `BORG_REMOTE_DOMAIN`                                                                                     |
 | `REMOTE_USER`       | n/a                        | <sup>1</sup> | Username to log in to `BORG_REMOTE_DOMAIN`                                                                                  |
 | `SSH_PRIVKEY`       | n/a                        | <sup>1</sup> | Full path to the private SSH key used to log in to `BORG_REMOTE_DOMAIN`. Cannot be password protected                       |
 | `TARGET_DIRECTORY`  | n/a                        | Yes          | Full path to backup target directory. Local or remote                                                                       |

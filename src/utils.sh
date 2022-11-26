@@ -124,12 +124,12 @@ check_required_programs() {
 
 # Test ssh connection to the target server
 test_target_connectivity() {
-    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "exit"; then
+    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "exit"; then
         log 1 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN"
         exit 1
     fi
 
-    if ! ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version >/dev/null 2>&1"; then
+    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version >/dev/null 2>&1"; then
         log 1 2 "borg not available on $BORG_REMOTE_DOMAIN"
         exit 1
     fi

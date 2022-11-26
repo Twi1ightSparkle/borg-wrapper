@@ -30,7 +30,7 @@ borg_init() {
     fi
 
     if [ "$BORG_REMOTE" ]; then
-        RES="$(ssh -i "$BORG_SSH_PRIVKEY" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
+        RES="$(ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
         if [ -n "$RES" ]; then
             ERRORS+="\nTarget directory $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY is not empty."
         fi
