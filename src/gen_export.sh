@@ -20,7 +20,7 @@
 
 gen_export() {
     if [ "$LIVE" != true ]; then
-        echo "Note, this command will display your backup passphrase. Pass --live to show"
+        echo "This command will display your backup passphrase. Pass --live to show"
         exit 0
     fi
 

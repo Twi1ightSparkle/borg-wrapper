@@ -32,12 +32,12 @@ borg_init() {
     # Checks
     ERRORS=""
 
-    # Error if keyfile path already exist
+    # Error if keyfile path already exists
     if [ -f "$BORG_KEY_FILE" ]; then
         ERRORS+="\n- Keyfile $BORG_KEY_FILE already exists."
     fi
 
-    # Error if target directory is not empty
+    # Error if the target directory is not empty
     if [ "$REMOTE" = "true" ]; then
         RESULT="$(ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "if [ -d \"$TARGET_DIRECTORY\" ]; then ls --almost-all \"$TARGET_DIRECTORY\"; fi")"
     else

@@ -30,7 +30,7 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Edit `exclude.txt` and `include.txt` with your requirements. One entry per line
 - From the root of the repo, run `./borg.sh --init` to initialize the repo
 - Use crontab (or the scheduler of your choice) to run `./borg.sh --backup --automated --live` periodically
-- If you need to run multiple profiles, you can use the `--config` option to specify different config directory
+- If you need to run multiple profiles, you can use the `--config` option to specify a different config directory
 
 See [src/help.sh](https://github.com/Twi1ightSparkle/borg/blob/main/src/help.sh) for all command line options.
 
@@ -57,7 +57,7 @@ Comment out an option to use its default.
 | `LOG_FILE`           | `configDirectory/ borg.log`    | No           | Full path to the script log file                                                                                             |
 | `PRUNE_ON_BACKUP`    | `true`                         | No           | Run prune after every backup                                                                                                 |
 | `REMOTE_DOMAIN`      | n/a                            | <sup>1</sup> | FQDN or IP of the Borg backup server/target                                                                                  |
-| `REMOTE_PORT`        | 22                             | No           | Port to connect to `REMOTE_DOMAIN`                                                                                           |
+| `REMOTE_PORT`        | `22`                           | No           | Port to connect to `REMOTE_DOMAIN`                                                                                           |
 | `REMOTE_SSH_PRIVKEY` | n/a                            | <sup>1</sup> | Full path to the private SSH key used to log in to `REMOTE_DOMAIN`. Cannot be password protected                             |
 | `REMOTE_USER`        | n/a                            | <sup>1</sup> | Username to log in to `REMOTE_DOMAIN`                                                                                        |
 | `REMOTE`             | `false`                        | No           | Back up to a remote target over SSH                                                                                          |

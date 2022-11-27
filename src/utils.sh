@@ -53,7 +53,7 @@ test_webhook() {
         webhook false "Webhook test from $HOSTNAME with @ room off"
         webhook true "Webhook test from $HOSTNAME with @ room on"
     else
-        echo "Webhook disabled in config"
+        echo "Webhook disabled in the config"
     fi
 }
 
