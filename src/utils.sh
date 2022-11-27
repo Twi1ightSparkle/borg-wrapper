@@ -31,7 +31,7 @@ iso_time_stamp() {
 # 1: Notify. @rooms if true
 # 2: Message content
 webhook() {
-    if [ "$WEBHOOK_ENABLE" ]; then
+    if [ "$WEBHOOK_ENABLE" = "true" ]; then
         PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
             echo "$(iso_time_stamp) Sending payload $PAYLOAD to $WEBHOOK_URL"
@@ -49,7 +49,7 @@ webhook() {
 
 # Test the webhook. Sends two calls, one with and one without @room
 test_webhook() {
-    if [ "$WEBHOOK_ENABLE" ]; then
+    if [ "$WEBHOOK_ENABLE" = "true" ]; then
         webhook false "Webhook test from $HOSTNAME with @ room off"
         webhook true "Webhook test from $HOSTNAME with @ room on"
     else
@@ -89,13 +89,13 @@ check_required_env() {
     if [ ! "$BACKUP_PASSPHRASE" ]; then MISSING+="\nBACKUP_PASSPHRASE "; fi
     if [ ! "$TARGET_DIRECTORY" ]; then MISSING+="\nTARGET_DIRECTORY "; fi
 
-    if [ "$REMOTE" ]; then
+    if [ "$REMOTE" = "true" ]; then
         if [ ! "$REMOTE_DOMAIN" ]; then MISSING+="\nREMOTE_DOMAIN "; fi
         if [ ! "$REMOTE_USER" ]; then MISSING+="\nREMOTE_USER "; fi
         if [ ! "$REMOTE_SSH_PRIVKEY" ]; then MISSING+="\nREMOTE_SSH_PRIVKEY "; fi
     fi
 
-    if [ "$WEBHOOK_ENABLE" ]; then
+    if [ "$WEBHOOK_ENABLE" = "true" ]; then
         if [ ! "$WEBHOOK_URL" ]; then MISSING+="\nWEBHOOK_URL "; fi
     fi
 
@@ -109,8 +109,8 @@ check_required_env() {
 check_required_programs() {
     PROGRAMS=(bash borg cat cd chmod date dirname echo hostname ls read xargs)
 
-    if [ "$REMOTE" ]; then PROGRAMS+=(ssh); fi
-    if [ "$WEBHOOK_ENABLE" ]; then PROGRAMS+=(curl); fi
+    if [ "$REMOTE" = "true" ]; then PROGRAMS+=(ssh); fi
+    if [ "$WEBHOOK_ENABLE" = "true" ]; then PROGRAMS+=(curl); fi
 
     log 0 0 "Checking if required programs are installed"
     MISSING=""

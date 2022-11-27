@@ -64,7 +64,7 @@ export TIME_STAMP
 check_required_programs
 check_required_env
 
-if [ "$REMOTE" ]; then
+if [ "$REMOTE" = "true" ]; then
     test_target_connectivity
 fi
 

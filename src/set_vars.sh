@@ -56,7 +56,7 @@ else
 fi
 
 # Export borg environment options
-if [ "$REMOTE" ]; then
+if [ "$REMOTE" = "true" ]; then
     if [ ! "$REMOTE_PORT" ]; then REMOTE_PORT=22; fi
     export BORG_REPO="$REMOTE_USER@$REMOTE_DOMAIN:$TARGET_DIRECTORY"
     export BORG_RSH="ssh -i $REMOTE_SSH_PRIVKEY -p $REMOTE_PORT"

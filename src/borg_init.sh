@@ -38,7 +38,7 @@ borg_init() {
     fi
 
     # Error if target directory is not empty
-    if [ "$REMOTE" ]; then
+    if [ "$REMOTE" = "true" ]; then
         RESULT="$(ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "if [ -d \"$TARGET_DIRECTORY\" ]; then ls --almost-all \"$TARGET_DIRECTORY\"; fi")"
     else
         RESULT="$(if [ -d "$TARGET_DIRECTORY" ]; then ls --almost-all "$TARGET_DIRECTORY"; fi)"
