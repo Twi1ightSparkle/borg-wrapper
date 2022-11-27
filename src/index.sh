@@ -31,7 +31,8 @@ commands:
     -d, --diff NAME2        Diff backup NAME2 and name
     -D, --delete            Delete backup(s). name option can be specified.
                             If not, backups matching BORG_BACKUP_PREFIX will be deleted
-    -i, --init              Initialize a new backup repository
+    -i, --info              Display detailed information about the repo or a backup if name is specified
+    -I, --init              Initialize a new backup repository
     -l, --list              List all backups. Specify name option to list files in a specific backup
     -m, --mount PATH        Mount backup at PATH. name option must be specified
     -p, --prune             Prunes the repository by deleting all archives not
@@ -76,6 +77,7 @@ source "$SCRIPT_DIR/src/borg_backup.sh"
 source "$SCRIPT_DIR/src/borg_compact.sh"
 source "$SCRIPT_DIR/src/borg_delete.sh"
 source "$SCRIPT_DIR/src/borg_diff.sh"
+source "$SCRIPT_DIR/src/borg_info.sh"
 source "$SCRIPT_DIR/src/borg_init.sh"
 source "$SCRIPT_DIR/src/borg_list.sh"
 source "$SCRIPT_DIR/src/borg_mount.sh"
@@ -106,6 +108,8 @@ elif [ "$param_delete" ]; then
 elif [ "$param_diff" ]; then
     name_required
     borg_diff
+elif [ "$param_info" ]; then
+    borg_info
 elif [ "$param_init" ]; then
     borg_init
 elif [ "$param_list" ]; then

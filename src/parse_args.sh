@@ -37,9 +37,10 @@ while [ $# -gt 0 ]; do
     -d | --diff)        export param_diff="$2";         shift           ;;
     -D | --delete)      export param_delete=true;       shift           ;;
     -h | --help)        print_help;                     exit 0          ;;
-    -i | --init)        export param_init=true;         shift           ;;
+    -i | --info)        export param_info=true;         shift           ;;
+    -I | --init)        export param_init=true;         shift           ;;
     -l | --list)        export param_list=true;         shift           ;;
-    --live)             LIVE=true;         shift           ;;
+    --live)             LIVE=true;                      shift           ;;
     -m | --mount)       export param_mount="$2"         shift; shift    ;;
     -p | --prune)       export param_prune=true;        shift           ;;
     -t | --testhook)    export param_testhook=true;     shift           ;;
