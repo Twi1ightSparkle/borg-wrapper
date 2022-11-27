@@ -28,6 +28,10 @@ if [[ ! "$BORG_KEEP_HOURLY" ]]; then
     BORG_KEEP_HOURLY=2
 fi
 
+if [[ ! "$BORG_BACKUP_PREFIX" ]]; then
+    BORG_BACKUP_PREFIX="$HOSTNAME-"
+fi
+
 if [[ ! "$BORG_KEEP_DAILY" ]]; then
     BORG_KEEP_DAILY=7
 fi

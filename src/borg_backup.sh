@@ -20,7 +20,7 @@
 
 # Create a backup
 borg_create() {
-    BACKUP_NAME="$HOSTNAME-$TIME_STAMP"
+    BACKUP_NAME="$BORG_BACKUP_PREFIX$TIME_STAMP"
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
     if ! borg create \
         --one-file-system \

@@ -29,7 +29,7 @@ borg_prune() {
         --keep-monthly "$BORG_KEEP_MONTHLY" \
         --keep-yearly "$BORG_KEEP_YEARLY" \
         --keep-within "$BORG_KEEP_WITHIN" \
-        --glob-archive scitwi-* \
+        --glob-archive "$BORG_BACKUP_PREFIX*" \
         >> "$BORG_LOG_FILE" 2>&1
     then
         log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
