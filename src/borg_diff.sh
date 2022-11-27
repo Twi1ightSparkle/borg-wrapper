@@ -23,14 +23,14 @@ borg_diff() {
         "borg"
         "diff"
         "::$NAME"
-        "$param_diff"
+        "$ARG_DIFF"
     )
 
-    log 1 0 "Listing differences between $NAME and $param_diff in $BORG_REPO"
+    log 1 0 "Listing differences between $NAME and $ARG_DIFF in $BORG_REPO"
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Error listing differences between $NAME and $param_diff in $BORG_REPO"
+        log 1 0 "Error listing differences between $NAME and $ARG_DIFF in $BORG_REPO"
         exit 1
     fi
 }

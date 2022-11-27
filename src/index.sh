@@ -22,12 +22,12 @@ source "$SCRIPT_DIR/src/help.sh"
 source "$SCRIPT_DIR/src/parse_args.sh"
 
 # Load and test config/borg.env
-if [ ! "$param_config" ]; then
+if [ ! "$ARG_CONFIG" ]; then
     CONFIG_PATH="$SCRIPT_DIR/config/borg.env"
-elif [ -d "$param_config" ]; then
-    CONFIG_PATH="$param_config/borg.env"
+elif [ -d "$ARG_CONFIG" ]; then
+    CONFIG_PATH="$ARG_CONFIG/borg.env"
 else
-    CONFIG_PATH="$param_config"
+    CONFIG_PATH="$ARG_CONFIG"
 fi
 if [ ! -f "$CONFIG_PATH" ]; then
     echo -e "Unable to load config file $CONFIG_PATH\nCopy config.sample to config, then edit borg.env"
@@ -64,37 +64,37 @@ if [ "$REMOTE" ]; then
 fi
 
 # Run functions based on supplied command line option
-if [ "$param_version" ]; then
+if [ "$ARG_VERSION" ]; then
     echo "$PROGRAM_NAME $PROGRAM_VERSION"
     borg --version
-elif [ "$param_backup" ]; then
+elif [ "$ARG_BACKUP" ]; then
     dry_run_notice
     borg_backup
-elif [ "$param_compact" ]; then
+elif [ "$ARG_COMPACT" ]; then
     borg_compact
-elif [ "$param_delete" ]; then
+elif [ "$ARG_DELETE" ]; then
     dry_run_notice
     borg_delete
-elif [ "$param_diff" ]; then
+elif [ "$ARG_DIFF" ]; then
     name_required
     borg_diff
-elif [ "$param_info" ]; then
+elif [ "$ARG_INFO" ]; then
     borg_info
-elif [ "$param_export" ]; then
+elif [ "$ARG_EXPORT" ]; then
     gen_export
-elif [ "$param_init" ]; then
+elif [ "$ARG_INIT" ]; then
     borg_init
-elif [ "$param_list" ]; then
+elif [ "$ARG_LIST" ]; then
     borg_list
-elif [ "$param_mount" ]; then
+elif [ "$ARG_MOUNT" ]; then
     name_required
     borg_mount
-elif [ "$param_prune" ]; then
+elif [ "$ARG_PRUNE" ]; then
     dry_run_notice
     borg_prune
-elif [ "$param_unmount" ]; then
+elif [ "$ARG_UNMOUNT" ]; then
     borg_unmount
-elif [ "$param_testhook" ]; then
+elif [ "$ARG_TESTHOOK" ]; then
     test_webhook
 else
     print_help

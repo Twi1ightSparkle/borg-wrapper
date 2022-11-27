@@ -23,20 +23,20 @@ borg_mount() {
         "borg"
         "mount"
         "::$NAME"
-        "$param_mount"
+        "$ARG_MOUNT"
     )
 
-    log 1 0 "Mounting $BORG_REPO::$NAME to path $param_mount"
-    if [ ! -d "$param_mount" ]; then
-        log 1 0 "Error, mount directory $param_mount does not exist"
+    log 1 0 "Mounting $BORG_REPO::$NAME to path $ARG_MOUNT"
+    if [ ! -d "$ARG_MOUNT" ]; then
+        log 1 0 "Error, mount directory $ARG_MOUNT does not exist"
         exit 1
     fi
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Failed to mount $BORG_REPO::$NAME to path $param_mount"
+        log 1 0 "Failed to mount $BORG_REPO::$NAME to path $ARG_MOUNT"
         exit 1
     fi
 
-    log 1 0 "Successfully mounted $BORG_REPO::$NAME to path $param_mount"
+    log 1 0 "Successfully mounted $BORG_REPO::$NAME to path $ARG_MOUNT"
 }

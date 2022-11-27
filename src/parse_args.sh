@@ -30,23 +30,23 @@ LIVE=false
 
 while [ $# -gt 0 ]; do
     case $1 in
-    -a | --automated)   export param_automated=true;    shift           ;;
-    -b | --backup)      export param_backup=true;       shift           ;;
-    -c | --compact)     export param_compact=true;      shift           ;;
-    -C | --config)      export param_config="$2";       shift; shift    ;;
-    -d | --diff)        export param_diff="$2";         shift           ;;
-    -D | --delete)      export param_delete=true;       shift           ;;
-    -e | --export)      export param_export=true;       shift           ;;
-    -h | --help)        print_help;                     exit 0          ;;
-    -i | --info)        export param_info=true;         shift           ;;
-    -I | --init)        export param_init=true;         shift           ;;
-    -l | --list)        export param_list=true;         shift           ;;
-    --live)             LIVE=true;                      shift           ;;
-    -m | --mount)       export param_mount="$2"         shift; shift    ;;
-    -p | --prune)       export param_prune=true;        shift           ;;
-    -t | --testhook)    export param_testhook=true;     shift           ;;
-    -u | --unmount)     export param_unmount="$2";      shift; shift    ;;
-    -v | --version)     export param_version=true;      shift           ;;
+    -a | --automated)   export ARG_AUTOMATED=true;    shift           ;;
+    -b | --backup)      export ARG_BACKUP=true;       shift           ;;
+    -c | --compact)     export ARG_COMPACT=true;      shift           ;;
+    -C | --config)      export ARG_CONFIG="$2";       shift; shift    ;;
+    -d | --diff)        export ARG_DIFF="$2";         shift           ;;
+    -D | --delete)      export ARG_DELETE=true;       shift           ;;
+    -e | --export)      export ARG_EXPORT=true;       shift           ;;
+    -h | --help)        print_help;                   exit 0          ;;
+    -i | --info)        export ARG_INFO=true;         shift           ;;
+    -I | --init)        export ARG_INIT=true;         shift           ;;
+    -l | --list)        export ARG_LIST=true;         shift           ;;
+    --live)             LIVE=true;                    shift           ;;
+    -m | --mount)       export ARG_MOUNT="$2"         shift; shift    ;;
+    -p | --prune)       export ARG_PRUNE=true;        shift           ;;
+    -t | --testhook)    export ARG_TESTHOOK=true;     shift           ;;
+    -u | --unmount)     export ARG_UNMOUNT="$2";      shift; shift    ;;
+    -v | --version)     export ARG_VERSION=true;      shift           ;;
     -*)
         echo "Unknown option $1."
         print_help
