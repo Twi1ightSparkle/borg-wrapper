@@ -21,44 +21,55 @@
 POSITIONAL_ARGS=()
 
 # If no command line arguments were passed
-if [ $# = 0 ]; then
+if [ "$#" = 0 ]; then
     print_help
     exit 0
 fi
 
 LIVE=false
+COUNT=0
 
-while [ $# -gt 0 ]; do
+while [ "$#" -gt 0 ]; do
     case $1 in
-    -a | --automated)   export ARG_AUTOMATED=true;    shift           ;;
-    -b | --backup)      export ARG_BACKUP=true;       shift           ;;
-    -c | --compact)     export ARG_COMPACT=true;      shift           ;;
-    -C | --config)      export ARG_CONFIG="$2";       shift; shift    ;;
-    -d | --diff)        export ARG_DIFF="$2";         shift           ;;
-    -D | --delete)      export ARG_DELETE=true;       shift           ;;
-    -e | --export)      export ARG_EXPORT=true;       shift           ;;
-    -h | --help)        print_help;                   exit 0          ;;
-    -i | --info)        export ARG_INFO=true;         shift           ;;
-    -I | --init)        export ARG_INIT=true;         shift           ;;
-    -l | --list)        export ARG_LIST=true;         shift           ;;
-    --live)             LIVE=true;                    shift           ;;
-    -m | --mount)       export ARG_MOUNT="$2"         shift; shift    ;;
-    -p | --prune)       export ARG_PRUNE=true;        shift           ;;
-    -t | --testhook)    export ARG_TESTHOOK=true;     shift           ;;
-    -u | --unmount)     export ARG_UNMOUNT="$2";      shift; shift    ;;
-    -v | --version)     export ARG_VERSION=true;      shift           ;;
-    -*)
-        echo "Unknown option $1."
-        print_help
-        exit 1
-        ;;
-    *)
-        POSITIONAL_ARGS+=("$1") # save positional arg
-        shift                   # past argument
-        ;;
+        # commands
+        -h | --help)     print_help; exit 0                                                    ;;
+        -v | --version)  echo "$PROGRAM_NAME $PROGRAM_VERSION"; borg --version; exit 0         ;;
+        -b | --backup)   COMMAND="backup";   COUNT=$((COUNT+1));                  shift        ;;
+        -c | --compact)  COMMAND="compact";  COUNT=$((COUNT+1));                  shift        ;;
+        -D | --delete)   COMMAND="delete";   COUNT=$((COUNT+1));                  shift        ;;
+        -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1));                  shift        ;;
+        -e | --export)   COMMAND="export";   COUNT=$((COUNT+1));                  shift        ;;
+        -i | --info)     COMMAND="info";     COUNT=$((COUNT+1));                  shift        ;;
+        -I | --init)     COMMAND="init";     COUNT=$((COUNT+1));                  shift        ;;
+        -l | --list)     COMMAND="list";     COUNT=$((COUNT+1));                  shift        ;;
+        -m | --mount)    COMMAND="mount";    COUNT=$((COUNT+1)); export PATH="$2" shift; shift ;;
+        -p | --prune)    COMMAND="prune";    COUNT=$((COUNT+1));                  shift        ;;
+        -t | --testhook) COMMAND="testhook"; COUNT=$((COUNT+1));                  shift        ;;
+        -u | --unmount)  COMMAND="unmount";  COUNT=$((COUNT+1)); export PATH="$2" shift; shift ;;
+
+        # options
+        -a | --automated)   export AUTOMATED=true;  shift        ;;
+        -C | --config)      export CONFIG_DIR="$2"; shift; shift ;;
+        --live)             LIVE=true;              shift        ;;
+
+        # Catch unknown arguments
+        -*)
+            echo "Unknown option $1."
+            exit 1
+            ;;
+        *)
+            POSITIONAL_ARGS+=("$1") # save positional arg
+            shift                   # past argument
+            ;;
     esac
 done
 
+if [ "$COUNT" -gt 1 ]; then
+    echo "Exactly one command must be set"
+    exit 1
+fi
+
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
-export NAME="$2"
+export COMMAND
 export LIVE
+export NAME="$2"

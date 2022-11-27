@@ -33,8 +33,8 @@ if [ ! "$PRUNE_ON_BACKUP" ];       then    PRUNE_ON_BACKUP=true;              fi
 
 if [ "$EXCLUDE_FILE" ]; then
     EXCLUDE_PATH="$EXCLUDE_FILE";
-elif [ "$ARG_CONFIG" ]; then
-    EXCLUDE_PATH="$ARG_CONFIG/exclude.txt";
+elif [ "$CONFIG_DIR" ]; then
+    EXCLUDE_PATH="$CONFIG_DIR/exclude.txt";
 else
     EXCLUDE_PATH="$SCRIPT_DIR/config/exclude.txt";
 fi
@@ -42,8 +42,8 @@ export EXCLUDE_PATH
 
 if [ "$INCLUDE_FILE" ]; then
     INCLUDE_PATH="$INCLUDE_FILE";
-elif [ "$ARG_CONFIG" ]; then
-    INCLUDE_PATH="$ARG_CONFIG/include.txt";
+elif [ "$CONFIG_DIR" ]; then
+    INCLUDE_PATH="$CONFIG_DIR/include.txt";
 else
     INCLUDE_PATH="$SCRIPT_DIR/config/include.txt";
 fi
@@ -51,8 +51,8 @@ export INCLUDE_PATH
 
 if [ "$KEYFILE" ]; then
     export BORG_KEY_FILE="$KEYFILE"
-elif [ "$ARG_CONFIG" ]; then
-    export BORG_KEY_FILE="$ARG_CONFIG/keyfile";
+elif [ "$CONFIG_DIR" ]; then
+    export BORG_KEY_FILE="$CONFIG_DIR/keyfile";
 else
     export BORG_KEY_FILE="$SCRIPT_DIR/config/keyfile"
 fi

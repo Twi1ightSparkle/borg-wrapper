@@ -70,7 +70,7 @@ log() {
 
     echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$LOG_FILE"
 
-    if [ ! "$ARG_AUTOMATED" ] && [ "$PRINT" = 1 ]; then
+    if [ ! "$AUTOMATED" ] && [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"
     fi
 

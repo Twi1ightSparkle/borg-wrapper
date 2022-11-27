@@ -22,20 +22,20 @@ borg_unmount() {
     CMD=(
         "borg"
         "umount"
-        "$ARG_UNMOUNT"
+        "$PATH"
     )
 
-    log 1 0 "Unmounting path $ARG_UNMOUNT"
-    if [ ! -d "$ARG_UNMOUNT" ]; then
-        log 1 0 "Error, path $ARG_UNMOUNT does not exist"
+    log 1 0 "Unmounting path $PATH"
+    if [ ! -d "$PATH" ]; then
+        log 1 0 "Error, path $PATH does not exist"
         exit 1
     fi
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Failed to unmount path $ARG_UNMOUNT"
+        log 1 0 "Failed to unmount path $PATH"
         exit 1
     fi
 
-    log 1 0 "Successfully unmounted path $ARG_UNMOUNT"
+    log 1 0 "Successfully unmounted path $PATH"
 }
