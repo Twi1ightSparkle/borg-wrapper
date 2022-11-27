@@ -32,20 +32,16 @@ while [[ $# -gt 0 ]]; do
     -b | --backup)      export param_backup=true;       shift           ;;
     -c | --compact)     export param_compact=true;      shift           ;;
     -C | --config)      export BORG_CONFIG_PATH="$2";   shift; shift    ;;
-    -d | --delete)      export param_delete=true;       shift           ;;
+    -d | --diff)        export param_delete="$2";       shift           ;;
+    -D | --delete)      export param_delete=true;       shift           ;;
     -h | --help)        print_help;                     exit 0          ;;
     -i | --init)        export param_init=true;         shift           ;;
     -l | --list)        export param_list=true;         shift           ;;
-    -n | --name)        export param_name="$2";         shift; shift    ;;
+    -m | --mount)       export param_mount="$2"         shift; shift    ;;
     -p | --prune)       export param_prune=true;        shift           ;;
     -t | --testhook)    export param_testhook=true;     shift           ;;
     -u | --unmount)     export param_unmount=true;      shift           ;;
     -v | --version)     export param_version=true;      shift           ;;
-    -m | --mount)
-        export param_mount=true
-        export param_mount_path="$"
-        shift; shift;
-        ;;
     -*)
         echo "Unknown option $1."
         print_help
@@ -59,3 +55,4 @@ while [[ $# -gt 0 ]]; do
 done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+export NAME="$1"

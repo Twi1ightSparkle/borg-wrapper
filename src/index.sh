@@ -23,12 +23,13 @@ print_help() {
     cat <<EOF
 $PROGRAM_NAME
 
-Usage: ./borg.sh <command> [options]
+Usage: ./borg.sh <command> [options] [name]
 
 commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
-    -d, --delete            Delete backup with ID. --name must be specified
+    -d, --diff NAME2        Diff backup NAME2 and name
+    -D, --delete            Delete backup with ID. --name must be specified
     -i, --init              Initialize a new backup repository
     -l, --list              List all backups. Specify --name to list files in a specific backup
     -m, --mount PATH        Mount backup at PATH. --name must be specified
@@ -40,7 +41,6 @@ options:
     -C, --config            Full path to config (env) file
     -h, --help              This help text
                             matching any of the specified retention options
-    -n, --name NAME         Backup name
     -t, --testhook          Test webhook (if enabled in the config)
     -v, --version           Print version number
 
