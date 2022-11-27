@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 PROGRAM_NAME="Borg backup runner"
-PROGRAM_VERSION="0.1.0"
+PROGRAM_VERSION="0.2.0-beta"
 export PROGRAM_NAME
 export PROGRAM_VERSION
 
