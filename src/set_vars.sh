@@ -20,58 +20,25 @@
 
 HOSTNAME=$(hostname)
 
-if [ "$param_automated" ]; then
-    export AUTOMATED=1
-fi
+if [ ! "$BORG_BACKUP_PREFIX" ];         then    BORG_BACKUP_PREFIX="$HOSTNAME-";        fi
+if [ ! "$BORG_COMPACT_ON_BACKUP" ];     then    BORG_COMPACT_ON_BACKUP=true;            fi
+if [ ! "$BORG_KEEP_DAILY" ];            then    BORG_KEEP_DAILY=7;                      fi
+if [ ! "$BORG_KEEP_HOURLY" ];           then    BORG_KEEP_HOURLY=2;                     fi
+if [ ! "$BORG_KEEP_MONTHLY" ];          then    BORG_KEEP_MONTHLY=12;                   fi
+if [ ! "$BORG_KEEP_WEEKLY" ];           then    BORG_KEEP_WEEKLY=4;                     fi
+if [ ! "$BORG_KEEP_WITHIN" ];           then    BORG_KEEP_WITHIN=24H;                   fi
+if [ ! "$BORG_KEEP_YEARLY" ];           then    BORG_KEEP_YEARLY=-1;                    fi
+if [ ! "$BORG_LOG_FILE" ];              then    BORG_LOG_FILE="$SCRIPT_DIR/borg.log";   fi
+if [ ! "$BORG_PRUNE_ON_BACKUP" ];       then    BORG_PRUNE_ON_BACKUP=true;              fi
 
-if [[ ! "$BORG_COMPACT_ON_BACKUP" ]]; then
-    BORG_COMPACT_ON_BACKUP=true
-fi
-
-if [[ ! "$BORG_KEEP_HOURLY" ]]; then
-    BORG_KEEP_HOURLY=2
-fi
-
-if [[ ! "$BORG_BACKUP_PREFIX" ]]; then
-    BORG_BACKUP_PREFIX="$HOSTNAME-"
-fi
-
-if [[ ! "$BORG_KEEP_DAILY" ]]; then
-    BORG_KEEP_DAILY=7
-fi
-
-if [[ ! "$BORG_KEEP_WEEKLY" ]]; then
-    BORG_KEEP_WEEKLY=4
-fi
-
-if [[ ! "$BORG_KEEP_MONTHLY" ]]; then
-    BORG_KEEP_MONTHLY=12
-fi
-
-if [[ ! "$BORG_KEEP_YEARLY" ]]; then
-    BORG_KEEP_YEARLY=-1
-fi
-
-if [[ ! "$BORG_KEEP_WITHIN" ]]; then
-    BORG_KEEP_WITHIN=24H
-fi
-
-if [[ "$BORG_KEYFILE" ]]; then
+if [ "$BORG_KEYFILE" ]; then
     export BORG_KEY_FILE="$BORG_KEYFILE"
 else
     export BORG_KEY_FILE="$SCRIPT_DIR/config/keyfile"
 fi
 
-if [[ ! "$BORG_LOG_FILE" ]]; then
-    BORG_LOG_FILE="$SCRIPT_DIR/borg.log"
-fi
-
-if [[ ! "$BORG_PRUNE_ON_BACKUP" ]]; then
-    BORG_PRUNE_ON_BACKUP=true
-fi
-
-if [[ "$BORG_REMOTE" ]]; then
-    if [[ ! "$BORG_REMOTE_PORT" ]]; then
+if [ "$BORG_REMOTE" ]; then
+    if [ ! "$BORG_REMOTE_PORT" ]; then
         BORG_REMOTE_PORT=22
     fi
     export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
