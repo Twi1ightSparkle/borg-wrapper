@@ -37,5 +37,4 @@ borg_prune() {
     fi
 
     log 1 1 "Successfully pruned archives matching $BORG_REPO::$HOSTNAME-*"
-
 }
