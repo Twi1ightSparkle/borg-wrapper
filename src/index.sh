@@ -29,10 +29,10 @@ commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
     -d, --diff NAME2        Diff backup NAME2 and name
-    -D, --delete            Delete backup with ID. --name must be specified
+    -D, --delete            Delete backup with ID. name option must be specified
     -i, --init              Initialize a new backup repository
-    -l, --list              List all backups. Specify a backup name to list files in this specific backup
-    -m, --mount PATH        Mount backup at PATH. --name must be specified
+    -l, --list              List all backups. Specify name option to list files in a specific backup
+    -m, --mount PATH        Mount backup at PATH. name option must be specified
     -p, --prune             Prunes the repository by deleting all archives not
     -u, --unmount           Unmount the mounted backup
 
@@ -99,14 +99,17 @@ elif [ "$param_backup" ]; then
 elif [ "$param_compact" ]; then
     borg_compact
 elif [ "$param_delete" ]; then
+    name_required
     borg_delete
 elif [ "$param_diff" ]; then
+    name_required
     borg_diff
 elif [ "$param_init" ]; then
     borg_init
 elif [ "$param_list" ]; then
     borg_list
 elif [ "$param_mount" ]; then
+    name_required
     borg_mount
 elif [ "$param_prune" ]; then
     borg_prune

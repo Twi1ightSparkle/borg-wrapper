@@ -122,6 +122,13 @@ check_required_programs() {
     fi
 }
 
+name_required() {
+    if [ ! "$FILE" ]; then
+        log 1 0 "name option required for this command"
+        exit 1
+    fi
+}
+
 # Test ssh connection to the target server
 test_target_connectivity() {
     if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "exit"; then
