@@ -21,16 +21,18 @@
 HOSTNAME=$(hostname)
 
 # Set config defaults if not specified in the env file
-if [ ! "$BACKUP_PREFIX" ];         then    BACKUP_PREFIX="$HOSTNAME-";        fi
-if [ ! "$COMPACT_ON_BACKUP" ];     then    COMPACT_ON_BACKUP=true;            fi
-if [ ! "$KEEP_DAILY" ];            then    KEEP_DAILY=7;                      fi
-if [ ! "$KEEP_HOURLY" ];           then    KEEP_HOURLY=2;                     fi
-if [ ! "$KEEP_MONTHLY" ];          then    KEEP_MONTHLY=12;                   fi
-if [ ! "$KEEP_WEEKLY" ];           then    KEEP_WEEKLY=4;                     fi
-if [ ! "$KEEP_WITHIN" ];           then    KEEP_WITHIN=24H;                   fi
-if [ ! "$KEEP_YEARLY" ];           then    KEEP_YEARLY=-1;                    fi
-if [ ! "$LOG_FILE" ];              then    LOG_FILE="$CONFIG_DIR/borg.log";   fi
-if [ ! "$PRUNE_ON_BACKUP" ];       then    PRUNE_ON_BACKUP=true;              fi
+if [ ! "$BACKUP_PREFIX" ];     then BACKUP_PREFIX="$HOSTNAME-";      fi
+if [ ! "$COMPACT_ON_BACKUP" ]; then COMPACT_ON_BACKUP=true;          fi
+if [ ! "$KEEP_DAILY" ];        then KEEP_DAILY=7;                    fi
+if [ ! "$KEEP_HOURLY" ];       then KEEP_HOURLY=2;                   fi
+if [ ! "$KEEP_MONTHLY" ];      then KEEP_MONTHLY=12;                 fi
+if [ ! "$KEEP_WEEKLY" ];       then KEEP_WEEKLY=4;                   fi
+if [ ! "$KEEP_WITHIN" ];       then KEEP_WITHIN=24H;                 fi
+if [ ! "$KEEP_YEARLY" ];       then KEEP_YEARLY=-1;                  fi
+if [ ! "$LOG_FILE" ];          then LOG_FILE="$CONFIG_DIR/borg.log"; fi
+if [ ! "$PRUNE_ON_BACKUP" ];   then PRUNE_ON_BACKUP=true;            fi
+if [ ! "$REMOTE" ];            then REMOTE=false;                    fi
+if [ ! "$WEBHOOK_ENABLE" ];    then WEBHOOK_ENABLE=false;            fi
 
 # Set and verify files
 MISSING=""
