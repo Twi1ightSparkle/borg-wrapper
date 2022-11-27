@@ -44,6 +44,7 @@ All options are prefixed with `BORG_`. It's just removed below to make the table
 | ------------------- | -------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | `BACKUP_PASSPHRASE` | n/a                        | Yes          | Generate a secure password to protect the backup. `pwgen -s 64 1`. **Make sure to backup this.**                            |
 | `BACKUP_PREFIX`     | `hostname-`                | No           | Backup name prefix                                                                                                          |
+| `COMPACT_ON_BACKUP` | `true`                     | No           | Run compact after every backup                                                                                                |
 | `KEEP_DAILY`        | `7`                        | No           | Keep this many daily backups                                                                                                |
 | `KEEP_HOURLY`       | `2`                        | No           | Keep this many hourly backups                                                                                               |
 | `KEEP_MONTHLY`      | `12`                       | No           | Keep this many monthly backups                                                                                              |

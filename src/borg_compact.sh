@@ -19,5 +19,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_compact() {
-    log 1 0 "borg_compact"
+    log 1 1 "Compacting repo $BORG_REPO"
+    if ! borg compact --cleanup-commits >> "$BORG_LOG_FILE" 2>&1
+    then
+        log 1 2 "Failed to compact repo $BORG_REPO"
+        exit 1
+    fi
+
+    log 1 1 "Successfully compacted repo $BORG_REPO"
 }

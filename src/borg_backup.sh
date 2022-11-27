@@ -48,4 +48,7 @@ borg_backup() {
     if [ "$BORG_PRUNE_ON_BACKUP" = "true" ]; then
         borg_prune
     fi
+    if [ "$BORG_COMPACT_ON_BACKUP" = "true" ]; then
+        borg_compact
+    fi
 }

@@ -24,6 +24,10 @@ if [ "$param_automated" ]; then
     export AUTOMATED=1
 fi
 
+if [[ ! "$BORG_COMPACT_ON_BACKUP" ]]; then
+    BORG_COMPACT_ON_BACKUP=true
+fi
+
 if [[ ! "$BORG_KEEP_HOURLY" ]]; then
     BORG_KEEP_HOURLY=2
 fi
