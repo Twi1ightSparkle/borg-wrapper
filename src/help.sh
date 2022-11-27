@@ -36,7 +36,7 @@ commands:
     -m, --mount PATH        Mount backup at PATH. backup_name option must be specified
     -p, --prune             Prunes the repository by deleting all archives not
                             matching any of the specified retention options
-    -u, --unmount           Unmount the mounted backup
+    -u, --unmount PATH      Unmount the mounted backup
 
 options:
     -a, --automated         Disable most log messages to the console

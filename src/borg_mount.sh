@@ -19,5 +19,24 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_mount() {
-    log 1 0 "borg_mount"
+    CMD=(
+        "borg"
+        "mount"
+        "::$NAME"
+        "$param_mount"
+    )
+
+    log 1 0 "Mounting $BORG_REPO::$NAME to path $param_mount"
+    if [ ! -d "$param_mount" ]; then
+        log 1 0 "Error, mount directory $param_mount does not exist"
+        exit 1
+    fi
+    log 0 0 "Running command: ${CMD[*]}"
+
+    if ! "${CMD[@]}"; then
+        log 1 0 "Failed to mount $BORG_REPO::$NAME to path $param_mount"
+        exit 1
+    fi
+
+    log 1 0 "Successfully mounted $BORG_REPO::$NAME to path $param_mount"
 }

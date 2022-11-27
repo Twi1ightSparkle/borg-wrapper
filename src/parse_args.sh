@@ -44,7 +44,7 @@ while [ $# -gt 0 ]; do
     -m | --mount)       export param_mount="$2"         shift; shift    ;;
     -p | --prune)       export param_prune=true;        shift           ;;
     -t | --testhook)    export param_testhook=true;     shift           ;;
-    -u | --unmount)     export param_unmount=true;      shift           ;;
+    -u | --unmount)     export param_unmount="$2";      shift; shift    ;;
     -v | --version)     export param_version=true;      shift           ;;
     -*)
         echo "Unknown option $1."

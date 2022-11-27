@@ -19,5 +19,23 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_unmount() {
-    log 1 0 "borg_unmount"
+    CMD=(
+        "borg"
+        "umount"
+        "$param_unmount"
+    )
+
+    log 1 0 "Unmounting path $param_unmount"
+    if [ ! -d "$param_unmount" ]; then
+        log 1 0 "Error, path $param_unmount does not exist"
+        exit 1
+    fi
+    log 0 0 "Running command: ${CMD[*]}"
+
+    if ! "${CMD[@]}"; then
+        log 1 0 "Failed to unmount path $param_unmount"
+        exit 1
+    fi
+
+    log 1 0 "Successfully unmounted path $param_unmount"
 }
