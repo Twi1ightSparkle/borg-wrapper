@@ -36,15 +36,15 @@ while [[ $# -gt 0 ]]; do
     -h | --help)        print_help;                     exit 0          ;;
     -i | --init)        export param_init=true;         shift           ;;
     -l | --list)        export param_list=true;         shift           ;;
+    -n | --name)        export param_name="$2";         shift; shift    ;;
     -p | --prune)       export param_prune=true;        shift           ;;
     -t | --testhook)    export param_testhook=true;     shift           ;;
     -u | --unmount)     export param_unmount=true;      shift           ;;
     -v | --version)     export param_version=true;      shift           ;;
     -m | --mount)
         export param_mount=true
-        export param_mount_id="$2"
-        export param_mount_path="$3"
-        shift; shift; shift
+        export param_mount_path="$"
+        shift; shift;
         ;;
     -*)
         echo "Unknown option $1."

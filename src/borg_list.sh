@@ -19,5 +19,19 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_list() {
-    log 1 0 "borg_list"
+    if [ "$param_name" ]; then
+        CMD=("borg" "list" "::$param_name")
+        MSG="Listing files in backup $BORG_REPO::$param_name"
+    else
+        CMD=("borg" "list")
+        MSG="Listing backups in repo $BORG_REPO"
+    fi
+
+    log 1 0 "$MSG"
+
+    if ! "${CMD[@]}"
+    then
+        log 1 0 "Failed to list backups in repo $BORG_REPO"
+        exit 1
+    fi
 }
