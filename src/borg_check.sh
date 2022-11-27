@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This script cannot be run on it's own. From the repo root, run ./borg.sh
+# This script cannot be run on it's own. From the repo root, run ./borg-wrapper.sh
 
-# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
+# Borg wrapper. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify

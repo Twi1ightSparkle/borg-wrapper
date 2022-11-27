@@ -1,7 +1,7 @@
-# Borg backup runner
+# Borg wrapper
 
 <!--
-Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
+Borg wrapper. An (almost) no-dependency wrapper script for basic Borg backup features.
 Copyright (C) 2022  Twilight Sparkle
 
 This program is free software: you can redistribute it and/or modify
@@ -28,8 +28,8 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Copy the `sample.config` directory to `config`
 - Edit `config/borg.env` and add your config options
 - Edit `exclude.txt` and `include.txt` with your requirements. One entry per line
-- From the root of the repo, run `./borg.sh --init` to initialize the repo
-- Use crontab (or the scheduler of your choice) to run `./borg.sh --backup --automated --live` periodically
+- From the root of the repo, run `./borg-wrapper.sh --init` to initialize the repo
+- Use crontab (or the scheduler of your choice) to run `./borg-wrapper.sh --backup --automated --live` periodically
 - If you need to run multiple profiles, you can use the `--config` option to specify a different config directory
 
 See [src/help.sh](https://github.com/Twi1ightSparkle/borg/blob/main/src/help.sh) for all command line options.
