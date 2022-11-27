@@ -19,5 +19,23 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_prune() {
-    log 1 0 "borg_prune"
+    log 1 1 "Pruning archives matching $BORG_REPO::$HOSTNAME-*"
+    if ! borg prune \
+        --info \
+        --list \
+        --keep-hourly "$BORG_KEEP_HOURLY" \
+        --keep-daily "$BORG_KEEP_DAILY" \
+        --keep-weekly "$BORG_KEEP_WEEKLY" \
+        --keep-monthly "$BORG_KEEP_MONTHLY" \
+        --keep-yearly "$BORG_KEEP_YEARLY" \
+        --keep-within "$BORG_KEEP_WITHIN" \
+        --glob-archive scitwi-* \
+        >> "$BORG_LOG_FILE" 2>&1
+    then
+        log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
+        exit 1
+    fi
+
+    log 1 1 "Successfully pruned archives matching $BORG_REPO::$HOSTNAME-*"
+
 }

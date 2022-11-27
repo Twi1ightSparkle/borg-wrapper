@@ -45,4 +45,7 @@ borg_create() {
 
 borg_backup() {
     borg_create
+    if [ "$BORG_PRUNE_ON_BACKUP" = "true" ]; then
+        borg_prune
+    fi
 }
