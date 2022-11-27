@@ -29,18 +29,19 @@ commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
     -d, --diff NAME2        Diff backup NAME2 and name
-    -D, --delete            Delete backup with ID. name option must be specified
+    -D, --delete            Delete backup(s). name option can be specified.
+                            If not, backups matching BORG_BACKUP_PREFIX will be deleted
     -i, --init              Initialize a new backup repository
     -l, --list              List all backups. Specify name option to list files in a specific backup
     -m, --mount PATH        Mount backup at PATH. name option must be specified
     -p, --prune             Prunes the repository by deleting all archives not
+                            matching any of the specified retention options
     -u, --unmount           Unmount the mounted backup
 
 options:
     -a, --automated         Disable most log messages to the console
     -C, --config            Full path to config (env) file
     -h, --help              This help text
-                            matching any of the specified retention options
     --live                  Confirm running certain desctuctive changes. Runs a dry-run if not set
                             Check the log file for dry-run details
     -t, --testhook          Test webhook (if enabled in the config)
@@ -101,7 +102,6 @@ elif [ "$param_backup" ]; then
 elif [ "$param_compact" ]; then
     borg_compact
 elif [ "$param_delete" ]; then
-    name_required
     borg_delete
 elif [ "$param_diff" ]; then
     name_required

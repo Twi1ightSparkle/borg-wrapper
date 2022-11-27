@@ -19,5 +19,37 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_delete() {
-    log 1 0 "borg_delete"
+    CMD=(
+        "borg"
+        "delete"
+        "--info"
+        "--list"
+        "--save-space"
+    )
+
+    if [ "$LIVE" = false ]; then
+        CMD+=("--dry-run")
+        log 1 0 "Running in dry-run mode. See the log file for details"
+    else
+        CMD+=("--stats")
+    fi
+
+    if [ "$NAME" ]; then
+        CMD+=("::$NAME")
+        MSG="backup $BORG_REPO::$NAME"
+    else
+        CMD+=("--glob-archives" "$BORG_BACKUP_PREFIX*")
+        MSG="backups matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
+    fi
+
+    log 1 1 "Deleting $MSG"
+    log 0 0 "Running command: ${CMD[*]}"
+
+    if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
+    then
+        log 1 2 "Failed to delete $MSG"
+        exit 1
+    fi
+
+    log 1 1 "Successfully deleted $MSG"
 }
