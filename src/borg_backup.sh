@@ -32,7 +32,7 @@ borg_create() {
         "--show-rc"
         "--compression" "lz4"
         "--exclude-caches"
-        "--exclude-from" "$SCRIPT_DIR/config/exclude.txt"
+        "--exclude-from" "$BORG_EXCLUDE_FILE"
     )
 
     if [ "$LIVE" = false ]; then
@@ -53,7 +53,7 @@ borg_create() {
         if [ "$LINE" ] && [[ "$LINE" != "#"* ]]; then
             CMD+=("$LINE")
         fi
-    done < "$SCRIPT_DIR/config/include.txt"
+    done < "$BORG_INCLUDE_FILE"
 
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
     log 0 0 "Running command: ${CMD[*]}"

@@ -20,16 +20,18 @@
 
 HOSTNAME=$(hostname)
 
-if [ ! "$BORG_BACKUP_PREFIX" ];         then    BORG_BACKUP_PREFIX="$HOSTNAME-";        fi
-if [ ! "$BORG_COMPACT_ON_BACKUP" ];     then    BORG_COMPACT_ON_BACKUP=true;            fi
-if [ ! "$BORG_KEEP_DAILY" ];            then    BORG_KEEP_DAILY=7;                      fi
-if [ ! "$BORG_KEEP_HOURLY" ];           then    BORG_KEEP_HOURLY=2;                     fi
-if [ ! "$BORG_KEEP_MONTHLY" ];          then    BORG_KEEP_MONTHLY=12;                   fi
-if [ ! "$BORG_KEEP_WEEKLY" ];           then    BORG_KEEP_WEEKLY=4;                     fi
-if [ ! "$BORG_KEEP_WITHIN" ];           then    BORG_KEEP_WITHIN=24H;                   fi
-if [ ! "$BORG_KEEP_YEARLY" ];           then    BORG_KEEP_YEARLY=-1;                    fi
-if [ ! "$BORG_LOG_FILE" ];              then    BORG_LOG_FILE="$SCRIPT_DIR/borg.log";   fi
-if [ ! "$BORG_PRUNE_ON_BACKUP" ];       then    BORG_PRUNE_ON_BACKUP=true;              fi
+if [ ! "$BORG_BACKUP_PREFIX" ];         then    BORG_BACKUP_PREFIX="$HOSTNAME-";                        fi
+if [ ! "$BORG_COMPACT_ON_BACKUP" ];     then    BORG_COMPACT_ON_BACKUP=true;                            fi
+if [ ! "$BORG_EXCLUDE_FILE" ];          then    BORG_EXCLUDE_FILE="$SCRIPT_DIR/config/exclude.txt";     fi
+if [ ! "$BORG_INCLUDE_FILE" ];          then    BORG_INCLUDE_FILE="$SCRIPT_DIR/config/include.txt";     fi
+if [ ! "$BORG_KEEP_DAILY" ];            then    BORG_KEEP_DAILY=7;                                      fi
+if [ ! "$BORG_KEEP_HOURLY" ];           then    BORG_KEEP_HOURLY=2;                                     fi
+if [ ! "$BORG_KEEP_MONTHLY" ];          then    BORG_KEEP_MONTHLY=12;                                   fi
+if [ ! "$BORG_KEEP_WEEKLY" ];           then    BORG_KEEP_WEEKLY=4;                                     fi
+if [ ! "$BORG_KEEP_WITHIN" ];           then    BORG_KEEP_WITHIN=24H;                                   fi
+if [ ! "$BORG_KEEP_YEARLY" ];           then    BORG_KEEP_YEARLY=-1;                                    fi
+if [ ! "$BORG_LOG_FILE" ];              then    BORG_LOG_FILE="$SCRIPT_DIR/borg.log";                   fi
+if [ ! "$BORG_PRUNE_ON_BACKUP" ];       then    BORG_PRUNE_ON_BACKUP=true;                              fi
 
 if [ "$BORG_KEYFILE" ]; then
     export BORG_KEY_FILE="$BORG_KEYFILE"
