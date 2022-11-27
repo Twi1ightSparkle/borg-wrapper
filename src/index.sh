@@ -46,6 +46,7 @@ source "$SCRIPT_DIR/src/borg_list.sh"
 source "$SCRIPT_DIR/src/borg_mount.sh"
 source "$SCRIPT_DIR/src/borg_prune.sh"
 source "$SCRIPT_DIR/src/borg_unmount.sh"
+source "$SCRIPT_DIR/src/gen_export.sh"
 
 TIME_STAMP=$(iso_time_stamp)
 export TIME_STAMP
@@ -75,6 +76,8 @@ elif [ "$param_diff" ]; then
     borg_diff
 elif [ "$param_info" ]; then
     borg_info
+elif [ "$param_export" ]; then
+    gen_export
 elif [ "$param_init" ]; then
     borg_init
 elif [ "$param_list" ]; then

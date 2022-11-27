@@ -36,6 +36,7 @@ while [ $# -gt 0 ]; do
     -C | --config)      export BORG_CONFIG_PATH="$2";   shift; shift    ;;
     -d | --diff)        export param_diff="$2";         shift           ;;
     -D | --delete)      export param_delete=true;       shift           ;;
+    -e | --export)      export param_export=true;       shift           ;;
     -h | --help)        print_help;                     exit 0          ;;
     -i | --info)        export param_info=true;         shift           ;;
     -I | --init)        export param_init=true;         shift           ;;
