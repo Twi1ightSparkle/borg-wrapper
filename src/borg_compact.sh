@@ -23,6 +23,7 @@ borg_compact() {
         "borg"
         "compact"
         "--cleanup-commits"
+        "--show-rc"
     )
 
     log 1 1 "Compacting repo $BORG_REPO"

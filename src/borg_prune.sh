@@ -26,6 +26,7 @@ borg_prune() {
         "prune"
         "--info"
         "--list"
+        "--show-rc"
         "--keep-hourly" "$KEEP_HOURLY"
         "--keep-daily" "$KEEP_DAILY"
         "--keep-weekly" "$KEEP_WEEKLY"

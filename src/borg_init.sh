@@ -23,6 +23,7 @@ borg_init() {
     CMD=(
         "borg"
         "init"
+        "--show-rc"
         "--encryption" "keyfile-blake2"
     )
 
