@@ -59,5 +59,5 @@ while [ $# -gt 0 ]; do
 done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
-export NAME="$1"
+export NAME="$2"
 export LIVE
