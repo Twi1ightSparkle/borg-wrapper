@@ -37,7 +37,7 @@ while [ "$#" -gt 0 ]; do
         -b | --backup)   COMMAND="backup";   COUNT=$((COUNT+1));                  shift        ;;
         -c | --compact)  COMMAND="compact";  COUNT=$((COUNT+1));                  shift        ;;
         -D | --delete)   COMMAND="delete";   COUNT=$((COUNT+1));                  shift        ;;
-        -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1));                  shift        ;;
+        -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1)); export DIFF="$2" shift; shift ;;
         -e | --export)   COMMAND="export";   COUNT=$((COUNT+1));                  shift        ;;
         -i | --info)     COMMAND="info";     COUNT=$((COUNT+1));                  shift        ;;
         -I | --init)     COMMAND="init";     COUNT=$((COUNT+1));                  shift        ;;
