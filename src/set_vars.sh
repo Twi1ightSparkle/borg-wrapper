@@ -58,9 +58,7 @@ else
 fi
 
 if [ "$REMOTE" ]; then
-    if [ ! "$REMOTE_PORT" ]; then
-        REMOTE_PORT=22
-    fi
+    if [ ! "$REMOTE_PORT" ]; then REMOTE_PORT=22; fi
     export BORG_REPO="$REMOTE_USER@$REMOTE_DOMAIN:$TARGET_DIRECTORY"
     export BORG_RSH="ssh -i $REMOTE_SSH_PRIVKEY -p $REMOTE_PORT"
 else
