@@ -62,11 +62,11 @@ Comment out an option to use its default.
 | `REMOTE_USER`        | n/a                            | <sup>1</sup> | Username to log in to `REMOTE_DOMAIN`                                                                                        |
 | `REMOTE`             | `false`                        | No           | Back up to a remote target over SSH                                                                                          |
 | `TARGET_DIRECTORY`   | n/a                            | Yes          | Full path to backup target directory. Local or remote                                                                        |
-| `WEBHOOK_ENABLE`     | `false`                        | No           | Enable logging to webhook                                                                                                    |
+| `WEBHOOK_ENABLED`    | `false`                        | No           | Enable logging to webhook                                                                                                    |
 | `WEBHOOK_URL`        | n/a                            | <sup>2</sup> | Your webhook URL                                                                                                             |
 
 - <sup>1</sup> Required if `REMOTE=true`
-- <sup>2</sup> Required if `WEBHOOK_ENABLE=true`
+- <sup>2</sup> Required if `WEBHOOK_ENABLED=true`
 
 ## Webhook logging
 
