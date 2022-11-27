@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -37,17 +37,15 @@ borg_prune() {
 
     if [ "$LIVE" = false ]; then
         CMD+=("--dry-run")
-        log 1 0 "Running in dry-run mode. See the log file for details"
     fi
 
-    log 1 1 "Pruning archives matching $BORG_REPO::$HOSTNAME-*"
+    log 1 1 "Pruning archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
-    then
-        log 1 2 "Failed to prune archives matching $BORG_REPO::$HOSTNAME-*. See the log for more info"
+    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
+        log 1 2 "Failed to prune archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*. See the log for more info"
         exit 1
     fi
 
-    log 1 1 "Successfully pruned archives matching $BORG_REPO::$HOSTNAME-*"
+    log 1 1 "Successfully pruned archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
 }

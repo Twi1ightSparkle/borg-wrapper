@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -111,14 +111,20 @@ check_required_programs() {
     PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"; do
-        if ! hash "$PROGRAM" &> /dev/null; then
+        if ! hash "$PROGRAM" &>/dev/null; then
             MISSING+="\n$PROGRAM "
         fi
     done
 
     if [ -n "$MISSING" ]; then
-        log 1 0 "Some required programs missing on this system. Please install:$MISSING"
+        log 1 0 "Some required programs are missing on this system. Please install:$MISSING"
         exit 1
+    fi
+}
+
+dry_run_notice() {
+    if [ "$LIVE" = false ]; then
+        log 1 0 "Running in dry-run mode. See the log file for details"
     fi
 }
 
@@ -136,7 +142,7 @@ test_target_connectivity() {
         exit 1
     fi
 
-    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version >/dev/null 2>&1"; then
+    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version &>/dev/null"; then
         log 1 2 "borg not available on $BORG_REMOTE_DOMAIN"
         exit 1
     fi

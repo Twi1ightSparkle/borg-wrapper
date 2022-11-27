@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,5 +21,5 @@ PROGRAM_VERSION="0.1.0"
 export PROGRAM_NAME
 export PROGRAM_VERSION
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 source "$SCRIPT_DIR/src/index.sh"

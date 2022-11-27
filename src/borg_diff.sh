@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -29,8 +29,8 @@ borg_diff() {
     log 1 0 "Listing differences between $NAME and $param_diff in $BORG_REPO"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}"
-    then
+    if ! "${CMD[@]}"; then
+        log 1 0 "Error listing differences between $NAME and $param_diff in $BORG_REPO"
         exit 1
     fi
 }

@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,13 @@
 
 # Initialize borg backup repo.
 borg_init() {
-    log 1 1 "Initalizing new borg repo $BORG_REPO"
+    CMD=(
+        "borg"
+        "init"
+        "--encryption" "keyfile-blake2"
+    )
+
+    log 1 1 "Initializing new borg repo $BORG_REPO"
 
     # Checks
     ERRORS=""
@@ -30,13 +36,13 @@ borg_init() {
     fi
 
     if [ "$BORG_REMOTE" ]; then
-        RES="$(ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
-        if [ -n "$RES" ]; then
-            ERRORS+="\nTarget directory $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY is not empty."
+        RESULT="$(ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
+        if [ -n "$RESULT" ]; then
+            ERRORS+="\The target directory $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY is not empty."
         fi
     else
         if [ -d "$BORG_TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$BORG_TARGET_DIRECTORY")" ]; then
-            ERRORS+="\nTarget directory $BORG_TARGET_DIRECTORY is not empty."
+            ERRORS+="\The target directory $BORG_TARGET_DIRECTORY is not empty."
         fi
     fi
 
@@ -45,18 +51,17 @@ borg_init() {
         exit 1
     fi
 
+    log 0 0 "Running command: ${CMD[*]}"
+
     # Initialize Borg repo
-    if ! borg init \
-        --encryption keyfile-blake2 \
-        >> "$BORG_LOG_FILE" 2>&1
-    then
+    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
         log 1 2 "Error initiating borg repo $BORG_REPO"
         exit 1
     fi
 
     # Protect the keyfile
     if ! chmod 600 "$BORG_KEY_FILE"; then
-        log 1 2 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600."
+        log 1 2 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600"
     fi
 
     log 1 1 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"

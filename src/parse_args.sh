@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 POSITIONAL_ARGS=()
 
-# If no command line arguments was passed
+# If no command line arguments were passed
 if [ $# = 0 ]; then
     print_help
     exit 0

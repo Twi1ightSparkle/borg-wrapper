@@ -2,7 +2,7 @@
 
 # This script cannot be run on it's own. From the repo root, run ./borg.sh
 
-# Borg backup runner. Wrapper script for basic borg backup features.
+# Borg backup runner. An (almost) no-dependency wrapper script for basic Borg backup features.
 # Copyright (C) 2022  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,6 @@ borg_create() {
 
     if [ "$LIVE" = false ]; then
         CMD+=("--dry-run")
-        log 1 0 "Running in dry-run mode. See the log file for details"
     else
         CMD+=("--stats")
     fi
@@ -53,13 +52,12 @@ borg_create() {
         if [ "$LINE" ] && [[ "$LINE" != "#"* ]]; then
             CMD+=("$LINE")
         fi
-    done < "$BORG_INCLUDE_FILE"
+    done <"$BORG_INCLUDE_FILE"
 
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
-    then
+    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
         log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
         exit 1
     fi
