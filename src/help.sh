@@ -22,18 +22,18 @@ print_help() {
     cat <<EOF
 $PROGRAM_NAME
 
-Usage: ./borg.sh <command> [options] [name]
+Usage: ./borg.sh <command> [options] [backup_name]
 
 commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
-    -d, --diff NAME2        Diff backup NAME2 and name
-    -D, --delete            Delete backup(s). name option can be specified.
+    -d, --diff NAME2        Diff backup NAME2 and backup_name
+    -D, --delete            Delete backup(s). backup_name option can be specified.
                             If not, backups matching BORG_BACKUP_PREFIX will be deleted
-    -i, --info              Display detailed information about the repo or a backup if name is specified
+    -i, --info              Display detailed information about the repo or a backup if backup_name is specified
     -I, --init              Initialize a new backup repository
-    -l, --list              List all backups. Specify name option to list files in a specific backup
-    -m, --mount PATH        Mount backup at PATH. name option must be specified
+    -l, --list              List all backups. Specify backup_name option to list files in a specific backup
+    -m, --mount PATH        Mount backup at PATH. backup_name option must be specified
     -p, --prune             Prunes the repository by deleting all archives not
                             matching any of the specified retention options
     -u, --unmount           Unmount the mounted backup
