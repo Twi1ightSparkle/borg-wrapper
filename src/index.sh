@@ -65,34 +65,7 @@ fi
 source "$BORG_CONFIG_PATH"
 
 # Set static vars
-HOSTNAME=$(hostname)
-export BORG_PASSPHRASE="$BORG_BACKUP_PASSPHRASE"
-if [ "$param_automated" ]; then
-    export AUTOMATED=1
-fi
-
-# Set log file path
-if [[ ! "$BORG_LOG_FILE" ]]; then
-    BORG_LOG_FILE="$SCRIPT_DIR/borg.log"
-fi
-
-# Set key file path
-if [[ "$BORG_KEYFILE" ]]; then
-    export BORG_KEY_FILE="$BORG_KEYFILE"
-else
-    export BORG_KEY_FILE="$SCRIPT_DIR/config/keyfile"
-fi
-
-# Set borg repo
-if [[ "$BORG_REMOTE" ]]; then
-    if [[ ! "$BORG_REMOTE_PORT" ]]; then
-        BORG_REMOTE_PORT=22
-    fi
-    export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
-    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY -p $BORG_REMOTE_PORT"
-else
-    export BORG_REPO="$BORG_TARGET_DIRECTORY"
-fi
+source "$SCRIPT_DIR/src/set_vars.sh"
 
 # Source functions
 source "$SCRIPT_DIR/src/utils.sh"
