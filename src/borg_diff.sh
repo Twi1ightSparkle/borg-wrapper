@@ -19,11 +19,17 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_diff() {
-    MSG="Listing files in backup $BORG_REPO::$NAME"
+    CMD=(
+        "borg"
+        "diff"
+        "::$NAME"
+        "$param_diff"
+    )
 
     log 1 0 "Listing differences between $NAME and $param_diff in $BORG_REPO"
+    log 0 0 "Running command: ${CMD[*]}"
 
-    if ! borg diff "::$NAME" "$param_diff"
+    if ! "${CMD[@]}"
     then
         exit 1
     fi

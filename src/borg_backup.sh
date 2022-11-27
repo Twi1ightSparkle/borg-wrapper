@@ -21,20 +21,44 @@
 # Create a backup
 borg_create() {
     BACKUP_NAME="$BORG_BACKUP_PREFIX$TIME_STAMP"
+    CMD=(
+        "borg"
+        "create"
+        "--info"
+        "--list"
+        "--one-file-system"
+        "--warning"
+        "--filter" "AME"
+        "--show-rc"
+        "--compression" "lz4"
+        "--exclude-caches"
+        "--exclude-from" "$SCRIPT_DIR/config/exclude.txt"
+    )
+
+    if [ "$LIVE" = false ]; then
+        CMD+=("--dry-run")
+        log 1 0 "Running in dry-run mode. See the log file for details"
+    else
+        CMD+=("--stats")
+    fi
+
+    CMD+=("::$BACKUP_NAME")
+
+    # Read include file
+    while read -r LINE; do
+        # Trim whitespace
+        LINE="$(echo "$LINE" | xargs)"
+
+        # Exclude comments and empty lines
+        if [ "$LINE" ] && [[ "$LINE" != "#"* ]]; then
+            CMD+=("$LINE")
+        fi
+    done < "$SCRIPT_DIR/config/include.txt"
+
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
-    if ! borg create \
-        --one-file-system \
-        --warning \
-        --filter AME \
-        --stats \
-        --show-rc \
-        --compression lz4 \
-        --exclude-caches \
-        --exclude-from "$SCRIPT_DIR/config/exclude.txt" \
-        ::"$BACKUP_NAME" \
-        /home/twilight/temp \
-        >> "$BORG_LOG_FILE" 2>&1
-        # --patterns-from "$SCRIPT_DIR/config/include.txt" \
+    log 0 0 "Running command: ${CMD[*]}"
+
+    if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
     then
         log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
         exit 1
@@ -46,7 +70,6 @@ borg_create() {
 borg_backup() {
     borg_create
     if [ "$BORG_PRUNE_ON_BACKUP" = "true" ]; then
-        export LIVE=true
         borg_prune
     fi
     if [ "$BORG_COMPACT_ON_BACKUP" = "true" ]; then

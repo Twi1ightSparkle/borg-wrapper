@@ -41,6 +41,7 @@ borg_prune() {
     fi
 
     log 1 1 "Pruning archives matching $BORG_REPO::$HOSTNAME-*"
+    log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
     then

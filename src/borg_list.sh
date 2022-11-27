@@ -28,6 +28,7 @@ borg_list() {
     fi
 
     log 1 0 "$MSG"
+    log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"
     then
