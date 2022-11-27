@@ -107,8 +107,12 @@ check_required_env() {
 
 # Make sure required programs are installed
 check_required_programs() {
+    PROGRAMS=(bash borg cat cd chmod date dirname echo hostname ls read xargs)
+
+    if [ "$REMOTE" ]; then PROGRAMS+=(ssh); fi
+    if [ "$WEBHOOK_ENABLE" ]; then PROGRAMS+=(curl); fi
+
     log 0 0 "Checking if required programs are installed"
-    PROGRAMS=(bash borg cat chmod curl date echo hostname ssh)
     MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"; do
         if ! hash "$PROGRAM" &>/dev/null; then
