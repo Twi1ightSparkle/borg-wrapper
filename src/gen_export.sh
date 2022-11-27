@@ -34,7 +34,7 @@ Note the leading space. This prevents the command from being saved on your histo
  export BORG_REPO=\"$BORG_REPO\"
 "
 
-    if [ "$BORG_REMOTE" ]; then
+    if [ "$REMOTE" ]; then
         STRING+=" export BORG_RSH=\"$BORG_RSH\"\n"
     fi
 

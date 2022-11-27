@@ -37,14 +37,14 @@ borg_delete() {
         CMD+=("::$NAME")
         MSG="backup $BORG_REPO::$NAME"
     else
-        CMD+=("--glob-archives" "$BORG_BACKUP_PREFIX*")
-        MSG="backups matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
+        CMD+=("--glob-archives" "$BACKUP_PREFIX*")
+        MSG="backups matching $BORG_REPO::$BACKUP_PREFIX*"
     fi
 
     log 1 1 "Deleting $MSG"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
+    if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
         log 1 2 "Failed to delete $MSG"
         exit 1
     fi

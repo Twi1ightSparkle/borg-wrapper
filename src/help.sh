@@ -28,7 +28,7 @@ commands:
     -b, --backup            Create new backup
     -c, --compact           Free up repository space by compacting segments
     -D, --delete            Delete backup(s). backup_name option can be specified.
-                            If not, backups matching BORG_BACKUP_PREFIX will be deleted
+                            If not, backups matching BACKUP_PREFIX will be deleted
     -d, --diff NAME2        Diff backup NAME2 and backup_name
     -e, --export            Generate export commands to manually run borg commands
     -i, --info              Display detailed information about the repo or a backup if backup_name is specified

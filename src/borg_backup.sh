@@ -20,7 +20,7 @@
 
 # Create a backup
 borg_create() {
-    BACKUP_NAME="$BORG_BACKUP_PREFIX$TIME_STAMP"
+    BACKUP_NAME="$BACKUP_PREFIX$TIME_STAMP"
     CMD=(
         "borg"
         "create"
@@ -57,7 +57,7 @@ borg_create() {
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
+    if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
         log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
         exit 1
     fi
@@ -67,10 +67,10 @@ borg_create() {
 
 borg_backup() {
     borg_create
-    if [ "$BORG_PRUNE_ON_BACKUP" = "true" ]; then
+    if [ "$PRUNE_ON_BACKUP" = "true" ]; then
         borg_prune
     fi
-    if [ "$BORG_COMPACT_ON_BACKUP" = "true" ]; then
+    if [ "$COMPACT_ON_BACKUP" = "true" ]; then
         borg_compact
     fi
 }

@@ -35,14 +35,14 @@ borg_init() {
         ERRORS+="\nKeyfile $BORG_KEY_FILE already exists."
     fi
 
-    if [ "$BORG_REMOTE" ]; then
-        RESULT="$(ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "if [ -d \"$BORG_TARGET_DIRECTORY\" ]; then ls --almost-all \"$BORG_TARGET_DIRECTORY\"; fi")"
+    if [ "$REMOTE" ]; then
+        RESULT="$(ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "if [ -d \"$TARGET_DIRECTORY\" ]; then ls --almost-all \"$TARGET_DIRECTORY\"; fi")"
         if [ -n "$RESULT" ]; then
-            ERRORS+="\The target directory $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY is not empty."
+            ERRORS+="\The target directory $REMOTE_USER@$REMOTE_DOMAIN:$TARGET_DIRECTORY is not empty."
         fi
     else
-        if [ -d "$BORG_TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$BORG_TARGET_DIRECTORY")" ]; then
-            ERRORS+="\The target directory $BORG_TARGET_DIRECTORY is not empty."
+        if [ -d "$TARGET_DIRECTORY" ] && [ -n "$(ls --almost-all "$TARGET_DIRECTORY")" ]; then
+            ERRORS+="\The target directory $TARGET_DIRECTORY is not empty."
         fi
     fi
 
@@ -54,7 +54,7 @@ borg_init() {
     log 0 0 "Running command: ${CMD[*]}"
 
     # Initialize Borg repo
-    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
+    if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
         log 1 2 "Error initiating borg repo $BORG_REPO"
         exit 1
     fi

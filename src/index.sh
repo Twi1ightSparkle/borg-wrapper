@@ -59,7 +59,7 @@ export TIME_STAMP
 check_required_programs
 check_required_env
 
-if [ "$BORG_REMOTE" ]; then
+if [ "$REMOTE" ]; then
     test_target_connectivity
 fi
 

@@ -20,19 +20,19 @@
 
 HOSTNAME=$(hostname)
 
-if [ ! "$BORG_BACKUP_PREFIX" ];         then    BORG_BACKUP_PREFIX="$HOSTNAME-";        fi
-if [ ! "$BORG_COMPACT_ON_BACKUP" ];     then    BORG_COMPACT_ON_BACKUP=true;            fi
-if [ ! "$BORG_KEEP_DAILY" ];            then    BORG_KEEP_DAILY=7;                      fi
-if [ ! "$BORG_KEEP_HOURLY" ];           then    BORG_KEEP_HOURLY=2;                     fi
-if [ ! "$BORG_KEEP_MONTHLY" ];          then    BORG_KEEP_MONTHLY=12;                   fi
-if [ ! "$BORG_KEEP_WEEKLY" ];           then    BORG_KEEP_WEEKLY=4;                     fi
-if [ ! "$BORG_KEEP_WITHIN" ];           then    BORG_KEEP_WITHIN=24H;                   fi
-if [ ! "$BORG_KEEP_YEARLY" ];           then    BORG_KEEP_YEARLY=-1;                    fi
-if [ ! "$BORG_LOG_FILE" ];              then    BORG_LOG_FILE="$SCRIPT_DIR/borg.log";   fi
-if [ ! "$BORG_PRUNE_ON_BACKUP" ];       then    BORG_PRUNE_ON_BACKUP=true;              fi
+if [ ! "$BACKUP_PREFIX" ];         then    BACKUP_PREFIX="$HOSTNAME-";        fi
+if [ ! "$COMPACT_ON_BACKUP" ];     then    COMPACT_ON_BACKUP=true;            fi
+if [ ! "$KEEP_DAILY" ];            then    KEEP_DAILY=7;                      fi
+if [ ! "$KEEP_HOURLY" ];           then    KEEP_HOURLY=2;                     fi
+if [ ! "$KEEP_MONTHLY" ];          then    KEEP_MONTHLY=12;                   fi
+if [ ! "$KEEP_WEEKLY" ];           then    KEEP_WEEKLY=4;                     fi
+if [ ! "$KEEP_WITHIN" ];           then    KEEP_WITHIN=24H;                   fi
+if [ ! "$KEEP_YEARLY" ];           then    KEEP_YEARLY=-1;                    fi
+if [ ! "$LOG_FILE" ];              then    LOG_FILE="$SCRIPT_DIR/borg.log";   fi
+if [ ! "$PRUNE_ON_BACKUP" ];       then    PRUNE_ON_BACKUP=true;              fi
 
-if [ "$BORG_EXCLUDE_FILE" ]; then
-    BORG_EXCLUDE_PATH="$BORG_EXCLUDE_FILE";
+if [ "$EXCLUDE_FILE" ]; then
+    BORG_EXCLUDE_PATH="$EXCLUDE_FILE";
 elif [ "$param_config" ]; then
     BORG_EXCLUDE_PATH="$param_config/exclude.txt";
 else
@@ -40,8 +40,8 @@ else
 fi
 export BORG_EXCLUDE_PATH
 
-if [ "$BORG_INCLUDE_FILE" ]; then
-    BORG_INCLUDE_PATH="$BORG_INCLUDE_FILE";
+if [ "$INCLUDE_FILE" ]; then
+    BORG_INCLUDE_PATH="$INCLUDE_FILE";
 elif [ "$param_config" ]; then
     BORG_INCLUDE_PATH="$param_config/include.txt";
 else
@@ -49,22 +49,22 @@ else
 fi
 export BORG_INCLUDE_PATH
 
-if [ "$BORG_KEYFILE" ]; then
-    export BORG_KEY_FILE="$BORG_KEYFILE"
+if [ "$KEYFILE" ]; then
+    export BORG_KEY_FILE="$KEYFILE"
 elif [ "$param_config" ]; then
     export BORG_KEY_FILE="$param_config/keyfile";
 else
     export BORG_KEY_FILE="$SCRIPT_DIR/config/keyfile"
 fi
 
-if [ "$BORG_REMOTE" ]; then
-    if [ ! "$BORG_REMOTE_PORT" ]; then
-        BORG_REMOTE_PORT=22
+if [ "$REMOTE" ]; then
+    if [ ! "$REMOTE_PORT" ]; then
+        REMOTE_PORT=22
     fi
-    export BORG_REPO="$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN:$BORG_TARGET_DIRECTORY"
-    export BORG_RSH="ssh -i $BORG_SSH_PRIVKEY -p $BORG_REMOTE_PORT"
+    export BORG_REPO="$REMOTE_USER@$REMOTE_DOMAIN:$TARGET_DIRECTORY"
+    export BORG_RSH="ssh -i $REMOTE_SSH_PRIVKEY -p $REMOTE_PORT"
 else
-    export BORG_REPO="$BORG_TARGET_DIRECTORY"
+    export BORG_REPO="$TARGET_DIRECTORY"
 fi
 
-export BORG_PASSPHRASE="$BORG_BACKUP_PASSPHRASE"
+export BORG_PASSPHRASE="$BACKUP_PASSPHRASE"

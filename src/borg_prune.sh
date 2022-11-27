@@ -26,26 +26,26 @@ borg_prune() {
         "prune"
         "--info"
         "--list"
-        "--keep-hourly" "$BORG_KEEP_HOURLY"
-        "--keep-daily" "$BORG_KEEP_DAILY"
-        "--keep-weekly" "$BORG_KEEP_WEEKLY"
-        "--keep-monthly" "$BORG_KEEP_MONTHLY"
-        "--keep-yearly" "$BORG_KEEP_YEARLY"
-        "--keep-within" "$BORG_KEEP_WITHIN"
-        "--glob-archive" "$BORG_BACKUP_PREFIX*"
+        "--keep-hourly" "$KEEP_HOURLY"
+        "--keep-daily" "$KEEP_DAILY"
+        "--keep-weekly" "$KEEP_WEEKLY"
+        "--keep-monthly" "$KEEP_MONTHLY"
+        "--keep-yearly" "$KEEP_YEARLY"
+        "--keep-within" "$KEEP_WITHIN"
+        "--glob-archive" "$BACKUP_PREFIX*"
     )
 
     if [ "$LIVE" = false ]; then
         CMD+=("--dry-run")
     fi
 
-    log 1 1 "Pruning archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
+    log 1 1 "Pruning archives matching $BORG_REPO::$BACKUP_PREFIX*"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >>"$BORG_LOG_FILE" 2>&1; then
-        log 1 2 "Failed to prune archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*. See the log for more info"
+    if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
+        log 1 2 "Failed to prune archives matching $BORG_REPO::$BACKUP_PREFIX*. See the log for more info"
         exit 1
     fi
 
-    log 1 1 "Successfully pruned archives matching $BORG_REPO::$BORG_BACKUP_PREFIX*"
+    log 1 1 "Successfully pruned archives matching $BORG_REPO::$BACKUP_PREFIX*"
 }

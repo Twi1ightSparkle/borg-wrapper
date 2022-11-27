@@ -31,25 +31,25 @@ iso_time_stamp() {
 # 1: Notify. @rooms if true
 # 2: Message content
 webhook() {
-    if [ "$BORG_WEBHOOK_ENABLE" ]; then
+    if [ "$WEBHOOK_ENABLE" ]; then
         PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
-            echo "$(iso_time_stamp) Sending payload $PAYLOAD to $BORG_WEBHOOK_URL"
+            echo "$(iso_time_stamp) Sending payload $PAYLOAD to $WEBHOOK_URL"
             curl \
                 --location \
                 --silent \
                 --request PUT \
                 --header 'Content-Type: application/json' \
                 --data-raw "$PAYLOAD" \
-                "$BORG_WEBHOOK_URL"
+                "$WEBHOOK_URL"
             echo ""
-        } >>"$BORG_LOG_FILE"
+        } >>"$LOG_FILE"
     fi
 }
 
 # Test the webhook. Sends two calls, one with and one without @room
 test_webhook() {
-    if [ "$BORG_WEBHOOK_ENABLE" ]; then
+    if [ "$WEBHOOK_ENABLE" ]; then
         webhook false "Webhook test from $HOSTNAME with @ room off"
         webhook true "Webhook test from $HOSTNAME with @ room on"
     else
@@ -68,7 +68,7 @@ log() {
     # Replace all newlines (\n) with a space
     MESSAGE_ONE_LINE=${MESSAGE//\\n/ }
 
-    echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
+    echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$LOG_FILE"
 
     if [ ! "$param_automated" ] && [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"
@@ -86,17 +86,17 @@ check_required_env() {
     log 0 0 "Checking if required variables are set"
     MISSING=""
 
-    if [ ! "$BORG_BACKUP_PASSPHRASE" ]; then MISSING+="\nBORG_BACKUP_PASSPHRASE "; fi
-    if [ ! "$BORG_TARGET_DIRECTORY" ]; then MISSING+="\nBORG_TARGET_DIRECTORY "; fi
+    if [ ! "$BACKUP_PASSPHRASE" ]; then MISSING+="\nBACKUP_PASSPHRASE "; fi
+    if [ ! "$TARGET_DIRECTORY" ]; then MISSING+="\nTARGET_DIRECTORY "; fi
 
-    if [ "$BORG_REMOTE" ]; then
-        if [ ! "$BORG_REMOTE_DOMAIN" ]; then MISSING+="\nBORG_REMOTE_DOMAIN "; fi
-        if [ ! "$BORG_REMOTE_USER" ]; then MISSING+="\nBORG_REMOTE_USER "; fi
-        if [ ! "$BORG_SSH_PRIVKEY" ]; then MISSING+="\nBORG_SSH_PRIVKEY "; fi
+    if [ "$REMOTE" ]; then
+        if [ ! "$REMOTE_DOMAIN" ]; then MISSING+="\nREMOTE_DOMAIN "; fi
+        if [ ! "$REMOTE_USER" ]; then MISSING+="\nREMOTE_USER "; fi
+        if [ ! "$REMOTE_SSH_PRIVKEY" ]; then MISSING+="\nREMOTE_SSH_PRIVKEY "; fi
     fi
 
-    if [ "$BORG_WEBHOOK_ENABLE" ]; then
-        if [ ! "$BORG_WEBHOOK_URL" ]; then MISSING+="\nBORG_WEBHOOK_URL "; fi
+    if [ "$WEBHOOK_ENABLE" ]; then
+        if [ ! "$WEBHOOK_URL" ]; then MISSING+="\nWEBHOOK_URL "; fi
     fi
 
     if [ -n "$MISSING" ]; then
@@ -137,13 +137,13 @@ name_required() {
 
 # Test ssh connection to the target server
 test_target_connectivity() {
-    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "exit"; then
-        log 1 2 "Unable to ssh to $BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN"
+    if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "exit"; then
+        log 1 2 "Unable to ssh to $REMOTE_USER@$REMOTE_DOMAIN"
         exit 1
     fi
 
-    if ! ssh -i "$BORG_SSH_PRIVKEY" -p "$BORG_REMOTE_PORT" "$BORG_REMOTE_USER@$BORG_REMOTE_DOMAIN" "borg --version &>/dev/null"; then
-        log 1 2 "borg not available on $BORG_REMOTE_DOMAIN"
+    if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "borg --version &>/dev/null"; then
+        log 1 2 "borg not available on $REMOTE_DOMAIN"
         exit 1
     fi
 }
