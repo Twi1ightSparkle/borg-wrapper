@@ -26,6 +26,7 @@ Usage: ./borg.sh <command> [options] [backup_name]
 
 commands:
     -b, --backup            Create new backup
+    -V, --check             Check/verify the consistency of a repository or a backup if backup_name option is set
     -c, --compact           Free up repository space by compacting segments
     -D, --delete            Delete backup(s). backup_name option can be specified.
                             If not, backups matching BACKUP_PREFIX will be deleted

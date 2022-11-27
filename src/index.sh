@@ -45,6 +45,7 @@ source "$SCRIPT_DIR/src/set_vars.sh"
 # Source functions
 source "$SCRIPT_DIR/src/utils.sh"
 source "$SCRIPT_DIR/src/borg_backup.sh"
+source "$SCRIPT_DIR/src/borg_check.sh"
 source "$SCRIPT_DIR/src/borg_compact.sh"
 source "$SCRIPT_DIR/src/borg_delete.sh"
 source "$SCRIPT_DIR/src/borg_diff.sh"
@@ -70,6 +71,7 @@ fi
 # Run function based on supplied command
 case "$COMMAND" in
     backup)     dry_run_notice; borg_backup  ;;
+    check)                      borg_check   ;;
     compact)                    borg_compact ;;
     delete)     dry_run_notice; borg_delete  ;;
     diff)       name_required;  borg_diff    ;;

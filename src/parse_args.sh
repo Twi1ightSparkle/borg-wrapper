@@ -35,6 +35,7 @@ while [ "$#" -gt 0 ]; do
         -h | --help)     print_help; exit 0                                                    ;;
         -v | --version)  echo "$PROGRAM_NAME $PROGRAM_VERSION"; borg --version; exit 0         ;;
         -b | --backup)   COMMAND="backup";   COUNT=$((COUNT+1));                  shift        ;;
+        -V | --check)    COMMAND="check";    COUNT=$((COUNT+1));                  shift        ;;
         -c | --compact)  COMMAND="compact";  COUNT=$((COUNT+1));                  shift        ;;
         -D | --delete)   COMMAND="delete";   COUNT=$((COUNT+1));                  shift        ;;
         -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1)); export DIFF="$2" shift; shift ;;
