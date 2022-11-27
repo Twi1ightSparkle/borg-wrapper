@@ -32,7 +32,7 @@ borg_prune() {
         --glob-archive "$BORG_BACKUP_PREFIX*" \
         >> "$BORG_LOG_FILE" 2>&1
     then
-        log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
+        log 1 2 "Failed to prune archives matching $BORG_REPO::$HOSTNAME-*. See the log for more info"
         exit 1
     fi
 
