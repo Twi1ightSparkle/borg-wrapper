@@ -21,19 +21,23 @@
 source "$SCRIPT_DIR/src/help.sh"
 source "$SCRIPT_DIR/src/parse_args.sh"
 
-# Load and test config/borg.env
+# Load and test config file
 if [ ! "$CONFIG_DIR" ]; then
-    CONFIG_PATH="$SCRIPT_DIR/config/borg.env"
-elif [ -d "$CONFIG_DIR" ]; then
-    CONFIG_PATH="$CONFIG_DIR/borg.env"
-else
-    CONFIG_PATH="$CONFIG_DIR"
+    CONFIG_DIR="$SCRIPT_DIR/config"
 fi
-if [ ! -f "$CONFIG_PATH" ]; then
-    echo -e "Unable to load config file $CONFIG_PATH\nCopy config.sample to config, then edit borg.env"
+
+if [ -d "$CONFIG_DIR" ]; then
+    CONFIG_FILE="$CONFIG_DIR/borg.env"
+else
+    echo -e "$CONFIG_DIR does not exist or is not a directory.\nCopy directory sample.config to config, then edit config files"
     exit 1
 fi
-source "$CONFIG_PATH"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Unable to load config file $CONFIG_FILE"
+    exit 1
+fi
+source "$CONFIG_FILE"
 
 # Set static vars
 source "$SCRIPT_DIR/src/set_vars.sh"

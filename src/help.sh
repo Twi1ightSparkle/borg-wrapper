@@ -44,7 +44,7 @@ commands:
 
 options:
     -a, --automated         Disable most log messages to the console
-    -C, --config            Full path to config (env) file or a config directory
+    -C, --config            Full path to config directory
         --live              Confirm running certain destructive changes. Runs a dry-run if not set
                             Check the log file for dry-run details
 
