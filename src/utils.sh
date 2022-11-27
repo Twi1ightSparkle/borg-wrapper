@@ -70,7 +70,7 @@ log() {
 
     echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$BORG_LOG_FILE"
 
-    if [ ! "$AUTOMATED" ] && [ "$PRINT" = 1 ]; then
+    if [ ! "$param_automated" ] && [ "$PRINT" = 1 ]; then
         echo -e "$MESSAGE"
     fi
 
@@ -86,17 +86,17 @@ check_required_env() {
     log 0 0 "Checking if required variables are set"
     MISSING=""
 
-    if [[ ! "$BORG_BACKUP_PASSPHRASE" ]]; then MISSING+="\nBORG_BACKUP_PASSPHRASE "; fi
-    if [[ ! "$BORG_TARGET_DIRECTORY" ]]; then MISSING+="\nBORG_TARGET_DIRECTORY "; fi
+    if [ ! "$BORG_BACKUP_PASSPHRASE" ]; then MISSING+="\nBORG_BACKUP_PASSPHRASE "; fi
+    if [ ! "$BORG_TARGET_DIRECTORY" ]; then MISSING+="\nBORG_TARGET_DIRECTORY "; fi
 
     if [ "$BORG_REMOTE" ]; then
-        if [[ ! "$BORG_REMOTE_DOMAIN" ]]; then MISSING+="\nBORG_REMOTE_DOMAIN "; fi
-        if [[ ! "$BORG_REMOTE_USER" ]]; then MISSING+="\nBORG_REMOTE_USER "; fi
-        if [[ ! "$BORG_SSH_PRIVKEY" ]]; then MISSING+="\nBORG_SSH_PRIVKEY "; fi
+        if [ ! "$BORG_REMOTE_DOMAIN" ]; then MISSING+="\nBORG_REMOTE_DOMAIN "; fi
+        if [ ! "$BORG_REMOTE_USER" ]; then MISSING+="\nBORG_REMOTE_USER "; fi
+        if [ ! "$BORG_SSH_PRIVKEY" ]; then MISSING+="\nBORG_SSH_PRIVKEY "; fi
     fi
 
     if [ "$BORG_WEBHOOK_ENABLE" ]; then
-        if [[ ! "$BORG_WEBHOOK_URL" ]]; then MISSING+="\nBORG_WEBHOOK_URL "; fi
+        if [ ! "$BORG_WEBHOOK_URL" ]; then MISSING+="\nBORG_WEBHOOK_URL "; fi
     fi
 
     if [ -n "$MISSING" ]; then

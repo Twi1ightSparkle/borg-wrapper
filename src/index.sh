@@ -55,7 +55,7 @@ EOF
 source "$SCRIPT_DIR/src/parse_args.sh"
 
 # Load and test config/borg.env
-if [[ ! "$BORG_CONFIG_PATH" ]]; then
+if [ ! "$BORG_CONFIG_PATH" ]; then
     BORG_CONFIG_PATH="$SCRIPT_DIR/config/borg.env"
 fi
 if [ ! -f "$BORG_CONFIG_PATH" ]; then
@@ -86,7 +86,7 @@ export TIME_STAMP
 check_required_programs
 check_required_env
 
-if [[ "$BORG_REMOTE" ]]; then
+if [ "$BORG_REMOTE" ]; then
     test_target_connectivity
 fi
 

@@ -26,7 +26,7 @@ if [ $# = 0 ]; then
     exit 0
 fi
 
-while [[ $# -gt 0 ]]; do
+while [ $# -gt 0 ]; do
     case $1 in
     -a | --automated)   export param_automated=true;    shift           ;;
     -b | --backup)      export param_backup=true;       shift           ;;
