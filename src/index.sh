@@ -98,6 +98,8 @@ fi
 source "$SCRIPT_DIR/src/utils.sh"
 source "$SCRIPT_DIR/src/borg_backup.sh"
 source "$SCRIPT_DIR/src/borg_compact.sh"
+source "$SCRIPT_DIR/src/borg_delete.sh"
+source "$SCRIPT_DIR/src/borg_diff.sh"
 source "$SCRIPT_DIR/src/borg_init.sh"
 source "$SCRIPT_DIR/src/borg_list.sh"
 source "$SCRIPT_DIR/src/borg_mount.sh"
@@ -125,6 +127,8 @@ elif [ "$param_compact" ]; then
     borg_compact
 elif [ "$param_delete" ]; then
     borg_delete
+elif [ "$param_diff" ]; then
+    borg_diff
 elif [ "$param_init" ]; then
     borg_init
 elif [ "$param_list" ]; then

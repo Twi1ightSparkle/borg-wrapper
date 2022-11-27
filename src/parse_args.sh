@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
     -b | --backup)      export param_backup=true;       shift           ;;
     -c | --compact)     export param_compact=true;      shift           ;;
     -C | --config)      export BORG_CONFIG_PATH="$2";   shift; shift    ;;
-    -d | --diff)        export param_delete="$2";       shift           ;;
+    -d | --diff)        export param_diff="$2";         shift           ;;
     -D | --delete)      export param_delete=true;       shift           ;;
     -h | --help)        print_help;                     exit 0          ;;
     -i | --init)        export param_init=true;         shift           ;;
