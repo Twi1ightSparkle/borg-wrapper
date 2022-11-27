@@ -22,8 +22,12 @@ source "$SCRIPT_DIR/src/help.sh"
 source "$SCRIPT_DIR/src/parse_args.sh"
 
 # Load and test config/borg.env
-if [ ! "$BORG_CONFIG_PATH" ]; then
+if [ ! "$param_config" ]; then
     BORG_CONFIG_PATH="$SCRIPT_DIR/config/borg.env"
+elif [ -d "$param_config" ]; then
+    BORG_CONFIG_PATH="$param_config/borg.env"
+else
+    BORG_CONFIG_PATH="$param_config"
 fi
 if [ ! -f "$BORG_CONFIG_PATH" ]; then
     echo -e "Unable to load config file $BORG_CONFIG_PATH\nCopy config.sample to config, then edit borg.env"
