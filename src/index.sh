@@ -31,7 +31,7 @@ commands:
     -d, --diff NAME2        Diff backup NAME2 and name
     -D, --delete            Delete backup with ID. --name must be specified
     -i, --init              Initialize a new backup repository
-    -l, --list              List all backups. Specify --name to list files in a specific backup
+    -l, --list              List all backups. Specify a backup name to list files in this specific backup
     -m, --mount PATH        Mount backup at PATH. --name must be specified
     -p, --prune             Prunes the repository by deleting all archives not
     -u, --unmount           Unmount the mounted backup
