@@ -32,7 +32,7 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Use crontab (or the scheduler of your choice) to run `./borg.sh --backup --automated --live` periodically
 - If you need to run multiple profiles, you can use the `--config` option to specify different config files
 
-See <src/help.sh> for all command line options.
+See [src/help.sh](https://github.com/Twi1ightSparkle/borg/blob/main/src/help.sh) for all command line options.
 
 ## env file
 
