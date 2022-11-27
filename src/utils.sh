@@ -130,7 +130,7 @@ dry_run_notice() {
 
 name_required() {
     if [ ! "$NAME" ]; then
-        log 1 0 "name option required for this command"
+        log 1 0 "backup_name option required for this command"
         exit 1
     fi
 }
