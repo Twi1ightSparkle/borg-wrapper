@@ -47,6 +47,14 @@ options:
     -t, --testhook          Test webhook (if enabled in the config)
     -v, --version           Print version number
 
+Dry-run mode:
+    The following commands default to running in dry-run mode. Details are saved into the log file.
+    Pass --live option to execute.
+        --backup
+        --delete
+        --prune
+        --export
+
 Additional documentation in the README.md file or at
 https://github.com/twi1ightsparkle/borg
 
