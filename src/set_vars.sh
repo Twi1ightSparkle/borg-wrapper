@@ -32,7 +32,7 @@ if [ ! "$KEEP_YEARLY" ];       then KEEP_YEARLY=-1;                  fi
 if [ ! "$LOG_FILE" ];          then LOG_FILE="$CONFIG_DIR/borg.log"; fi
 if [ ! "$PRUNE_ON_BACKUP" ];   then PRUNE_ON_BACKUP=true;            fi
 if [ ! "$REMOTE" ];            then REMOTE=false;                    fi
-if [ ! "$WEBHOOK_ENABLE" ];    then WEBHOOK_ENABLE=false;            fi
+if [ ! "$WEBHOOK_ENABLED" ];   then WEBHOOK_ENABLED=false;           fi
 
 # Set and verify files
 MISSING=""
