@@ -32,22 +32,22 @@ if [ ! "$LOG_FILE" ];              then    LOG_FILE="$SCRIPT_DIR/borg.log";   fi
 if [ ! "$PRUNE_ON_BACKUP" ];       then    PRUNE_ON_BACKUP=true;              fi
 
 if [ "$EXCLUDE_FILE" ]; then
-    BORG_EXCLUDE_PATH="$EXCLUDE_FILE";
+    EXCLUDE_PATH="$EXCLUDE_FILE";
 elif [ "$param_config" ]; then
-    BORG_EXCLUDE_PATH="$param_config/exclude.txt";
+    EXCLUDE_PATH="$param_config/exclude.txt";
 else
-    BORG_EXCLUDE_PATH="$SCRIPT_DIR/config/exclude.txt";
+    EXCLUDE_PATH="$SCRIPT_DIR/config/exclude.txt";
 fi
-export BORG_EXCLUDE_PATH
+export EXCLUDE_PATH
 
 if [ "$INCLUDE_FILE" ]; then
-    BORG_INCLUDE_PATH="$INCLUDE_FILE";
+    INCLUDE_PATH="$INCLUDE_FILE";
 elif [ "$param_config" ]; then
-    BORG_INCLUDE_PATH="$param_config/include.txt";
+    INCLUDE_PATH="$param_config/include.txt";
 else
-    BORG_INCLUDE_PATH="$SCRIPT_DIR/config/include.txt";
+    INCLUDE_PATH="$SCRIPT_DIR/config/include.txt";
 fi
-export BORG_INCLUDE_PATH
+export INCLUDE_PATH
 
 if [ "$KEYFILE" ]; then
     export BORG_KEY_FILE="$KEYFILE"
