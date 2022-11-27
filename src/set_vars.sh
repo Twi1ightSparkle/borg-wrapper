@@ -29,7 +29,7 @@ if [ ! "$KEEP_MONTHLY" ];          then    KEEP_MONTHLY=12;                   fi
 if [ ! "$KEEP_WEEKLY" ];           then    KEEP_WEEKLY=4;                     fi
 if [ ! "$KEEP_WITHIN" ];           then    KEEP_WITHIN=24H;                   fi
 if [ ! "$KEEP_YEARLY" ];           then    KEEP_YEARLY=-1;                    fi
-if [ ! "$LOG_FILE" ];              then    LOG_FILE="$SCRIPT_DIR/borg.log";   fi
+if [ ! "$LOG_FILE" ];              then    LOG_FILE="$CONFIG_DIR/borg.log";   fi
 if [ ! "$PRUNE_ON_BACKUP" ];       then    PRUNE_ON_BACKUP=true;              fi
 
 # Set and verify files
