@@ -35,7 +35,7 @@ borg_prune() {
         "--glob-archive" "$BACKUP_PREFIX*"
     )
 
-    if [ "$LIVE" = false ]; then
+    if [ "$LIVE" != true ]; then
         CMD+=("--dry-run")
     fi
 

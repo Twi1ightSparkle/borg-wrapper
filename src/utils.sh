@@ -123,7 +123,7 @@ check_required_programs() {
 }
 
 dry_run_notice() {
-    if [ "$LIVE" = false ]; then
+    if [ "$LIVE" != true ]; then
         log 1 0 "Running in dry-run mode. See the log file for details"
     fi
 }

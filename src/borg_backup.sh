@@ -35,7 +35,7 @@ borg_create() {
         "--exclude-from" "$EXCLUDE_PATH"
     )
 
-    if [ "$LIVE" = false ]; then
+    if [ "$LIVE" != true ]; then
         CMD+=("--dry-run")
     else
         CMD+=("--stats")
