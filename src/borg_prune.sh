@@ -18,19 +18,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# Params:
+# 1: true to ignore --live requirement
 borg_prune() {
+    CMD=(
+        "borg"
+        "prune"
+        "--info"
+        "--list"
+        "--keep-hourly" "$BORG_KEEP_HOURLY"
+        "--keep-daily" "$BORG_KEEP_DAILY"
+        "--keep-weekly" "$BORG_KEEP_WEEKLY"
+        "--keep-monthly" "$BORG_KEEP_MONTHLY"
+        "--keep-yearly" "$BORG_KEEP_YEARLY"
+        "--keep-within" "$BORG_KEEP_WITHIN"
+        "--glob-archive" "$BORG_BACKUP_PREFIX*"
+    )
+
+    if [ "$LIVE" = false ]; then
+        CMD+=("--dry-run")
+        log 1 0 "Running in dry-run mode. See the log file for details"
+    fi
+
     log 1 1 "Pruning archives matching $BORG_REPO::$HOSTNAME-*"
-    if ! borg prune \
-        --info \
-        --list \
-        --keep-hourly "$BORG_KEEP_HOURLY" \
-        --keep-daily "$BORG_KEEP_DAILY" \
-        --keep-weekly "$BORG_KEEP_WEEKLY" \
-        --keep-monthly "$BORG_KEEP_MONTHLY" \
-        --keep-yearly "$BORG_KEEP_YEARLY" \
-        --keep-within "$BORG_KEEP_WITHIN" \
-        --glob-archive "$BORG_BACKUP_PREFIX*" \
-        >> "$BORG_LOG_FILE" 2>&1
+
+    if ! "${CMD[@]}" >> "$BORG_LOG_FILE" 2>&1
     then
         log 1 2 "Failed to prune archives matching $BORG_REPO::$HOSTNAME-*. See the log for more info"
         exit 1

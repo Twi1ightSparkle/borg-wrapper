@@ -46,6 +46,7 @@ borg_create() {
 borg_backup() {
     borg_create
     if [ "$BORG_PRUNE_ON_BACKUP" = "true" ]; then
+        export LIVE=true
         borg_prune
     fi
     if [ "$BORG_COMPACT_ON_BACKUP" = "true" ]; then

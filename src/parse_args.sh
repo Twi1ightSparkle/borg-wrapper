@@ -26,6 +26,8 @@ if [ $# = 0 ]; then
     exit 0
 fi
 
+LIVE=false
+
 while [ $# -gt 0 ]; do
     case $1 in
     -a | --automated)   export param_automated=true;    shift           ;;
@@ -37,6 +39,7 @@ while [ $# -gt 0 ]; do
     -h | --help)        print_help;                     exit 0          ;;
     -i | --init)        export param_init=true;         shift           ;;
     -l | --list)        export param_list=true;         shift           ;;
+    --live)             LIVE=true;         shift           ;;
     -m | --mount)       export param_mount="$2"         shift; shift    ;;
     -p | --prune)       export param_prune=true;        shift           ;;
     -t | --testhook)    export param_testhook=true;     shift           ;;
@@ -56,3 +59,4 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 export NAME="$1"
+export LIVE

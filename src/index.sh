@@ -41,6 +41,8 @@ options:
     -C, --config            Full path to config (env) file
     -h, --help              This help text
                             matching any of the specified retention options
+    --live                  Confirm running certain desctuctive changes. Runs a dry-run if not set
+                            Check the log file for dry-run details
     -t, --testhook          Test webhook (if enabled in the config)
     -v, --version           Print version number
 
