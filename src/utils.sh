@@ -20,11 +20,15 @@
 
 # Returns the current time stamp in format 2022-11-26T18:32:49.564Z
 iso_time_stamp() {
-    NANOSECONDS="$(date "+%N")"
-    MILLISECONDS="${NANOSECONDS:0:3}"
     DATE="$(date -u "+%Y-%m-%dT%H:%M:%S")"
+    NANOSECONDS="$(date "+%N")"
     Z="Z"
-    echo "$DATE.$MILLISECONDS$Z"
+    if [ "$NANOSECONDS" = "N" ]; then
+        echo "$DATE$Z"
+    else
+        MILLISECONDS="${NANOSECONDS:0:3}"
+        echo "$DATE.$MILLISECONDS$Z"
+    fi
 }
 
 # Send a message to the webhook. Params:
