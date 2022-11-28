@@ -45,7 +45,7 @@ borg_init() {
     fi
 
     if [ -n "$RESULT" ]; then
-        ERRORS+="\n- The target directory $REMOTE_USER@$REMOTE_DOMAIN:$TARGET_DIRECTORY is not empty."
+        ERRORS+="\n- The target directory $BORG_REPO is not empty."
     fi
 
     # If any errors
