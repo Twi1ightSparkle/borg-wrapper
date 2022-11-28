@@ -31,14 +31,17 @@ Note the leading space. This prevents the command from being saved on your histo
 
  export BORG_KEY_FILE=\"$BORG_KEY_FILE\"
  export BORG_PASSPHRASE=\"$BORG_PASSPHRASE\"
- export BORG_REPO=\"$BORG_REPO\"
-"
+ export BORG_REPO=\"$BORG_REPO\""
 
     if [ "$REMOTE" = "true" ]; then
-        STRING+=" export BORG_RSH=\"$BORG_RSH\"\n"
+        STRING+="\n export BORG_RSH=\"$BORG_RSH\""
     fi
 
-    STRING+="\nborg list --last 2"
+    STRING+="\n\nborg list --last 2"
+
+    if [ "$REMOTE" = "true" ]; then
+        STRING+="\n\nSSH command: $BORG_RSH $REMOTE_USER@$REMOTE_DOMAIN"
+    fi
 
     echo -e "$STRING"
 }
