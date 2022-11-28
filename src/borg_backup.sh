@@ -25,7 +25,6 @@ borg_create() {
         "borg"
         "create"
         "--info"
-        "--list"
         "--one-file-system"
         "--warning"
         "--filter" "AME"
