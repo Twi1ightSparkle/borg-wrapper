@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 PROGRAM_NAME="Borg wrapper"
-PROGRAM_VERSION="0.2.1-beta"
+PROGRAM_VERSION="0.2.2-beta"
 export PROGRAM_NAME
 export PROGRAM_VERSION
 
