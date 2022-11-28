@@ -146,7 +146,7 @@ test_target_connectivity() {
         exit 1
     fi
 
-    if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "borg --version &>/dev/null"; then
+    if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "borg --version" &>/dev/null; then
         log 1 2 "borg not available on $REMOTE_DOMAIN"
         exit 1
     fi
