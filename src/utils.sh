@@ -100,7 +100,7 @@ check_required_env() {
     fi
 
     if [ -n "$MISSING" ]; then
-        log 1 0 "The following required options are missing from your borg.env file:$MISSING"
+        log 1 2 "The following required options are missing from your borg.env file:$MISSING"
         exit 1
     fi
 }
@@ -121,7 +121,7 @@ check_required_programs() {
     done
 
     if [ -n "$MISSING" ]; then
-        log 1 0 "Some required programs are missing on this system. Please install:$MISSING"
+        log 1 2 "Some required programs are missing on this system. Please install:$MISSING"
         exit 1
     fi
 }
