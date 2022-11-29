@@ -73,4 +73,4 @@ fi
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 export COMMAND
 export LIVE
-export NAME="$2"
+export NAME="${POSITIONAL_ARGS[0]}"
