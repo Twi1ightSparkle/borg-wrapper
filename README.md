@@ -18,6 +18,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
+I don't recommend relying on this script in production yet. Or, at least, frequently review and verify your backups.
+
 <https://www.borgbackup.org/>
 
 Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
