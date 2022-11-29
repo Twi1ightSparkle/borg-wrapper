@@ -43,7 +43,7 @@ borg_init() {
             RESULT=""
         fi
     else
-        RESULT="$(if [ -d "$TARGET_DIRECTORY" ]; then ls --almost-all "$TARGET_DIRECTORY"; fi)"
+        RESULT="$(if [ -d "$TARGET_DIRECTORY" ]; then ls -A "$TARGET_DIRECTORY"; fi)"
     fi
 
     if [ -n "$RESULT" ]; then
