@@ -31,11 +31,11 @@ borg_check() {
         MSG="backup $BORG_REPO::$NAME"
     fi
 
-    log 1 0 "Verifying the consistency of $MSG"
+    log 1 1 "Verifying the consistency of $MSG"
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 0 "Failed to verify the consistency of $MSG"
+        log 1 2 "Failed to verify the consistency of $MSG"
         exit 1
     fi
 
