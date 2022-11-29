@@ -90,7 +90,6 @@ check_required_env() {
     log 0 0 "Checking if required variables are set"
     MISSING=""
 
-    if [ ! "$BACKUP_PASSPHRASE" ]; then MISSING+="\nBACKUP_PASSPHRASE "; fi
     if [ ! "$TARGET_DIRECTORY" ]; then MISSING+="\nTARGET_DIRECTORY "; fi
 
     if [ "$REMOTE" = "true" ]; then

@@ -68,5 +68,10 @@ borg_init() {
         log 1 2 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600"
     fi
 
+    # Protect the passphrase file
+    if ! chmod 600 "$BACKUP_PASSPHRASE_FILE"; then
+        log 1 2 "Unable to set permissions of $BACKUP_PASSPHRASE_FILE. Manually set its permissions to 600"
+    fi
+
     log 1 1 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"
 }
