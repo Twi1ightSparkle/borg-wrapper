@@ -36,6 +36,11 @@ if [ ! "$WEBHOOK_ENABLED" ];   then WEBHOOK_ENABLED=false;           fi
 
 # Set and verify files
 MISSING=""
+if [ ! "$BACKUP_PASSPHRASE_FILE" ]; then BACKUP_PASSPHRASE_FILE="$CONFIG_DIR/borg_passphrase"; fi
+if [ ! -f "$BACKUP_PASSPHRASE_FILE" ];
+    then MISSING+="\n- Passphrase file $BACKUP_PASSPHRASE_FILE does not exist or is not a file";
+fi
+
 if [ ! "$EXCLUDE_FILE" ]; then EXCLUDE_FILE="$CONFIG_DIR/exclude.txt"; fi
 if [ ! -f "$EXCLUDE_FILE" ]; then MISSING+="\n- Exclude file $EXCLUDE_FILE does not exist or is not a file"; fi
 
@@ -66,4 +71,9 @@ else
     export BORG_REPO="$TARGET_DIRECTORY"
 fi
 
-export BORG_PASSPHRASE="$BACKUP_PASSPHRASE"
+BORG_PASSPHRASE="$(head -n 1 "$BACKUP_PASSPHRASE_FILE")"
+if [ ! "$BORG_PASSPHRASE" ];
+    then echo "Your passphrase cannot be empty. Add a secure passphrase to $BORG_PASSPHRASE"
+    exit 1
+fi
+export BORG_PASSPHRASE
