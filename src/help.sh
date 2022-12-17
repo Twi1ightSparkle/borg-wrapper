@@ -22,32 +22,34 @@ print_help() {
     cat <<EOF
 $PROGRAM_NAME
 
-Usage: ./borg-wrapper.sh <command> [options] [backup_name]
+Usage: ./borg-wrapper.sh <command> [options]
 
 commands:
-    -b, --backup            Create new backup
-    -V, --check             Check/verify the consistency of a repository or a backup if the backup_name option is set
-    -c, --compact           Free up repository space by compacting segments
-    -D, --delete            Delete backup(s). backup_name option can be specified.
-                            If not, backups matching BACKUP_PREFIX will be deleted
-    -d, --diff NAME2        Diff backup NAME2 and backup_name
-    -e, --export            Generate exports commands to run borg commands manually
-    -h, --help              This help text
-    -i, --info              Display detailed information about the repo or a backup if backup_name is specified
-    -I, --init              Initialize a new backup repository
-    -l, --list              List all backups. Specify the backup_name option to list files in a specific backup
-    -m, --mount PATH        Mount backup at PATH. backup_name option must be specified
-    -p, --prune             Prunes the repository by deleting all archives not
-                            matching any of the specified retention options
-    -t, --testhook          Test webhook (if enabled in the config)
-    -u, --unmount PATH      Unmount the mounted backup
-    -v, --version           Print version number
+    -b, --backup       Create new backup
+    -V, --check        Check/verify the consistency of a repository or a backup if the backup_name option is set
+    -c, --compact      Free up repository space by compacting segments
+    -D, --delete       Delete backup(s). Optionally set --name to delete a specific backup.
+                       If not, all backups matching BACKUP_PREFIX will be deleted
+    -d, --diff         Diff two backups. Specify the 1st backup with --name and the 2nd backup with --path
+    -e, --export       Generate exports commands to run borg commands manually
+    -h, --help         This help text
+    -i, --info         Display detailed information about the repo or a specific backup if --name is specified
+    -I, --init         Initialize a new backup repository
+    -l, --list         List all backups. Specify the --name option to list files in a specific backup
+    -m, --mount        Mount repo. --path must be specified. Optionally set --name to mount a specific backup.
+    -p, --prune        Prunes the repository by deleting all archives not
+                       matching any of the specified retention options
+    -t, --testhook     Test webhook (if enabled in the config)
+    -u, --unmount      Unmount the mounted backup. Specify the mount point with --path
+    -v, --version      Print version number
 
 options:
-    -a, --automated         Disable most log messages to the console
-    -C, --config            Full path to config directory. Default scriptDirectory/config
-        --live              Confirm running destructive changes. See below
-                            Check the log file for dry-run details
+    -a, --automated    Disable most log messages to the console
+    -C, --config PATH  Full path to config directory. Default scriptDirectory/config
+    -n, --name NAME    Name of a backup
+    -P, --path PATH    Path to (un)mount OR the 2nd backup name to diff with
+        --live         Confirm running destructive changes. See below
+                       Check the log file for dry-run details
 
 Dry-run mode:
     The following commands default to running in dry-run mode. Details are saved into the log file.

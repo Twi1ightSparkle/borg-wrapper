@@ -70,17 +70,17 @@ fi
 
 # Run function based on supplied command
 case "$COMMAND" in
-    backup)     dry_run_notice; borg_backup  ;;
-    check)                      borg_check   ;;
-    compact)                    borg_compact ;;
-    delete)     dry_run_notice; borg_delete  ;;
-    diff)       name_required;  borg_diff    ;;
-    export)                     gen_export   ;;
-    info)                       borg_info    ;;
-    init)                       borg_init    ;;
-    list)                       borg_list    ;;
-    mount)      name_required;  borg_mount   ;;
-    prune)      dry_run_notice; borg_prune   ;;
-    testhook)                   test_webhook ;;
-    unmount)                    borg_unmount ;;
+    backup)   dry_run_notice;                borg_backup  ;;
+    check)                                   borg_check   ;;
+    compact)                                 borg_compact ;;
+    delete)   dry_run_notice;                borg_delete  ;;
+    diff)     name_required;  path_required; borg_diff    ;;
+    export)                                  gen_export   ;;
+    info)                                    borg_info    ;;
+    init)                                    borg_init    ;;
+    list)                                    borg_list    ;;
+    mount)    path_required;                 borg_mount   ;;
+    prune)    dry_run_notice;                borg_prune   ;;
+    testhook)                                test_webhook ;;
+    unmount)  path_required;                 borg_unmount ;;
 esac

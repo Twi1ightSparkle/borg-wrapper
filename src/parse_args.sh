@@ -32,26 +32,28 @@ COUNT=0
 while [ "$#" -gt 0 ]; do
     case $1 in
         # commands
-        -h | --help)     print_help; exit 0                                                    ;;
-        -v | --version)  echo "$PROGRAM_NAME $PROGRAM_VERSION"; borg --version; exit 0         ;;
-        -b | --backup)   COMMAND="backup";   COUNT=$((COUNT+1));                  shift        ;;
-        -V | --check)    COMMAND="check";    COUNT=$((COUNT+1));                  shift        ;;
-        -c | --compact)  COMMAND="compact";  COUNT=$((COUNT+1));                  shift        ;;
-        -D | --delete)   COMMAND="delete";   COUNT=$((COUNT+1));                  shift        ;;
-        -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1)); export DIFF="$2" shift; shift ;;
-        -e | --export)   COMMAND="export";   COUNT=$((COUNT+1));                  shift        ;;
-        -i | --info)     COMMAND="info";     COUNT=$((COUNT+1));                  shift        ;;
-        -I | --init)     COMMAND="init";     COUNT=$((COUNT+1));                  shift        ;;
-        -l | --list)     COMMAND="list";     COUNT=$((COUNT+1));                  shift        ;;
-        -m | --mount)    COMMAND="mount";    COUNT=$((COUNT+1)); export PATH="$2" shift; shift ;;
-        -p | --prune)    COMMAND="prune";    COUNT=$((COUNT+1));                  shift        ;;
-        -t | --testhook) COMMAND="testhook"; COUNT=$((COUNT+1));                  shift        ;;
-        -u | --unmount)  COMMAND="unmount";  COUNT=$((COUNT+1)); export PATH="$2" shift; shift ;;
+        -h | --help)     print_help; exit 0 ;;
+        -v | --version)  echo "$PROGRAM_NAME $PROGRAM_VERSION"; borg --version; exit 0 ;;
+        -b | --backup)   COMMAND="backup";   COUNT=$((COUNT+1)); shift ;;
+        -V | --check)    COMMAND="check";    COUNT=$((COUNT+1)); shift ;;
+        -c | --compact)  COMMAND="compact";  COUNT=$((COUNT+1)); shift ;;
+        -D | --delete)   COMMAND="delete";   COUNT=$((COUNT+1)); shift ;;
+        -d | --diff)     COMMAND="diff";     COUNT=$((COUNT+1)); shift ;;
+        -e | --export)   COMMAND="export";   COUNT=$((COUNT+1)); shift ;;
+        -i | --info)     COMMAND="info";     COUNT=$((COUNT+1)); shift ;;
+        -I | --init)     COMMAND="init";     COUNT=$((COUNT+1)); shift ;;
+        -l | --list)     COMMAND="list";     COUNT=$((COUNT+1)); shift ;;
+        -m | --mount)    COMMAND="mount";    COUNT=$((COUNT+1)); shift ;;
+        -p | --prune)    COMMAND="prune";    COUNT=$((COUNT+1)); shift ;;
+        -t | --testhook) COMMAND="testhook"; COUNT=$((COUNT+1)); shift ;;
+        -u | --unmount)  COMMAND="unmount";  COUNT=$((COUNT+1)); shift ;;
 
         # options
+        --live)             LIVE=true;              shift        ;;
         -a | --automated)   export AUTOMATED=true;  shift        ;;
         -C | --config)      export CONFIG_DIR="$2"; shift; shift ;;
-        --live)             LIVE=true;              shift        ;;
+        -n | --name)        export NAME="$2";       shift; shift ;;
+        -P | --path)        export MOUNT_PATH="$2"; shift; shift ;;
 
         # Catch unknown arguments
         -*)
@@ -65,12 +67,10 @@ while [ "$#" -gt 0 ]; do
     esac
 done
 
-if [ "$COUNT" -gt 1 ]; then
+if [ ! "$COUNT" = 1 ]; then
     echo "Exactly one command must be set"
     exit 1
 fi
 
-set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 export COMMAND
 export LIVE
-export NAME="${POSITIONAL_ARGS[0]}"

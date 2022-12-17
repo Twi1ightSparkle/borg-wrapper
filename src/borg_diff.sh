@@ -23,14 +23,14 @@ borg_diff() {
         "borg"
         "diff"
         "::$NAME"
-        "$DIFF"
+        "$MOUNT_PATH"
     )
 
-    log 1 0 "Listing differences between $NAME and $DIFF in $BORG_REPO"
+    log 1 0 "Listing differences between $NAME and $MOUNT_PATH in $BORG_REPO"
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Error listing differences between $NAME and $DIFF in $BORG_REPO"
+        log 1 0 "Error listing differences between $NAME and $MOUNT_PATH in $BORG_REPO"
         exit 1
     fi
 }
