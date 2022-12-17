@@ -33,6 +33,12 @@ borg_delete() {
         CMD+=("--stats")
     fi
 
+    local ANSWER
+    read -r -p "This will delete all your backups. Type \"erase all backups\" in all uppercase to continue: " ANSWER
+    if [ ! "$ANSWER" = "ERASE ALL BACKUPS" ]; then
+        exit 0
+    fi
+
     if [ "$NAME" ]; then
         CMD+=("::$NAME")
         MSG="backup $BORG_REPO::$NAME"
