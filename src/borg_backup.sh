@@ -20,7 +20,7 @@
 
 # Create a backup
 borg_create() {
-    local BACKUP_NAME="$BACKUP_PREFIX$TIME_STAMP"
+    BACKUP_NAME="$BACKUP_PREFIX$TIME_STAMP"
     local CMD=(
         "borg"
         "create"
@@ -56,13 +56,14 @@ borg_create() {
     log 1 1 "Creating backup to $BORG_REPO::$BACKUP_NAME"
     log 0 0 "Running command: ${CMD[*]}"
 
-    if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 3 "Failed to create backup $BACKUP_NAME. See the log for more info"
-        exit 1
-    fi
+    "${CMD[@]}" >>"$LOG_FILE" 2>&1
+    CREATE_EXIT=$?
 
     MSG="Successfully backed up to $BORG_REPO::$BACKUP_NAME"
-    log 1 1 "$MSG"
+
+    if [ "$CREATE_EXIT" = 0 ]; then
+        log 1 1 "$MSG"
+    fi
 }
 
 borg_backup() {
@@ -73,6 +74,11 @@ borg_backup() {
     fi
     if [ "$COMPACT_ON_BACKUP" = "true" ]; then
         borg_compact
+    fi
+
+    if [ ! "$CREATE_EXIT" = 0 ]; then
+        log 1 3 "Errors occurred while creating backup $BACKUP_NAME. The backup might be incomplete. See the log for more info"
+        exit 1
     fi
 
     if [ "$WEBHOOK_VERBOSE" = "false" ]; then
