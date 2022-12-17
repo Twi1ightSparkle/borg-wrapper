@@ -52,26 +52,26 @@ borg_init() {
 
     # If any errors
     if [ -n "$ERRORS" ]; then
-        log 1 2 "Unable to initialize Borg repo:$ERRORS"
+        log 1 3 "Unable to initialize Borg repo:$ERRORS"
         exit 1
     fi
 
     # Initialize Borg repo
     log 0 0 "Running command: ${CMD[*]}"
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 2 "Error initiating borg repo $BORG_REPO"
+        log 1 3 "Error initiating borg repo $BORG_REPO"
         exit 1
     fi
 
     # Protect the keyfile
     if ! chmod 600 "$BORG_KEY_FILE"; then
-        log 1 2 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600"
+        log 1 3 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600"
     fi
 
     # Protect the passphrase file
     if ! chmod 600 "$BACKUP_PASSPHRASE_FILE"; then
-        log 1 2 "Unable to set permissions of $BACKUP_PASSPHRASE_FILE. Manually set its permissions to 600"
+        log 1 3 "Unable to set permissions of $BACKUP_PASSPHRASE_FILE. Manually set its permissions to 600"
     fi
 
-    log 1 1 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"
+    log 1 2 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"
 }

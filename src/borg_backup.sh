@@ -48,7 +48,7 @@ borg_create() {
         LINE="$(echo "$LINE" | xargs)"
 
         # Exclude comments and empty lines
-        if [ "$LINE" ] && [[ "$LINE" != "#"* ]]; then
+        if [[ "$LINE" && "$LINE" != "#"* ]]; then
             CMD+=("$LINE")
         fi
     done <"$INCLUDE_FILE"
@@ -57,19 +57,25 @@ borg_create() {
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 2 "Failed to create backup $BACKUP_NAME. See the log for more info"
+        log 1 3 "Failed to create backup $BACKUP_NAME. See the log for more info"
         exit 1
     fi
 
-    log 1 1 "Successfully backed up to $BORG_REPO::$BACKUP_NAME"
+    MSG="Successfully backed up to $BORG_REPO::$BACKUP_NAME"
+    log 1 1 "$MSG"
 }
 
 borg_backup() {
     borg_create
+
     if [ "$PRUNE_ON_BACKUP" = "true" ]; then
         borg_prune
     fi
     if [ "$COMPACT_ON_BACKUP" = "true" ]; then
         borg_compact
+    fi
+
+    if [ "$WEBHOOK_VERBOSE" = "false" ]; then
+        log 1 2 "$MSG"
     fi
 }

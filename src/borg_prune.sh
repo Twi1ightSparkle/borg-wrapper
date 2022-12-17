@@ -44,7 +44,7 @@ borg_prune() {
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 2 "Failed to prune archives matching $BORG_REPO::$BACKUP_PREFIX*. See the log for more info"
+        log 1 3 "Failed to prune archives matching $BORG_REPO::$BACKUP_PREFIX*. See the log for more info"
         exit 1
     fi
 

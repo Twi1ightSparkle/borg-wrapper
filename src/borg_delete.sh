@@ -45,7 +45,7 @@ borg_delete() {
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 2 "Failed to delete $MSG"
+        log 1 3 "Failed to delete $MSG"
         exit 1
     fi
 
