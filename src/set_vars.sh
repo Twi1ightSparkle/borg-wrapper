@@ -33,6 +33,7 @@ if [ ! "$LOG_FILE" ];          then LOG_FILE="$CONFIG_DIR/borg.log"; fi
 if [ ! "$PRUNE_ON_BACKUP" ];   then PRUNE_ON_BACKUP=true;            fi
 if [ ! "$REMOTE" ];            then REMOTE=false;                    fi
 if [ ! "$WEBHOOK_ENABLED" ];   then WEBHOOK_ENABLED=false;           fi
+if [ ! "$WEBHOOK_VERBOSE" ];   then WEBHOOK_VERBOSE=true;            fi
 
 # Set and verify files
 MISSING=""

@@ -63,7 +63,8 @@ test_webhook() {
 
 # Log some text to the log file. Params:
 # 1: 0 log to file only, 1 also print to console
-# 2: 0 do not log to webhook, 1 log to webhook, 2 also @room with webhook
+# 2: 0 do not log to webhook, 1 log to webhook when WEBHOOK_VERBOSE=true,
+#    2 always log to webhook, 3 also @room with webhook
 # 3: The text to log
 log() {
     PRINT="$1"
@@ -74,13 +75,13 @@ log() {
 
     echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$LOG_FILE"
 
-    if [ ! "$AUTOMATED" ] && [ "$PRINT" = 1 ]; then
+    if [[ ! "$AUTOMATED" && "$PRINT" = 1 ]]; then
         echo -e "$MESSAGE"
     fi
 
-    if [ "$HOOK" = 1 ]; then
+    if [[ ("$HOOK" = 1 && "$WEBHOOK_VERBOSE" = "true") || "$HOOK" = 2 ]]; then
         webhook false "$MESSAGE_ONE_LINE"
-    elif [ "$HOOK" = 2 ]; then
+    elif [ "$HOOK" = 3 ]; then
         webhook true "$MESSAGE_ONE_LINE"
     fi
 }
@@ -103,7 +104,7 @@ check_required_env() {
     fi
 
     if [ -n "$MISSING" ]; then
-        log 1 2 "The following required options are missing from your borg.env file:$MISSING"
+        log 1 3 "The following required options are missing from your borg.env file:$MISSING"
         exit 1
     fi
 }
@@ -124,7 +125,7 @@ check_required_programs() {
     done
 
     if [ -n "$MISSING" ]; then
-        log 1 2 "Some required programs are missing on this system. Please install:$MISSING"
+        log 1 3 "Some required programs are missing on this system. Please install:$MISSING"
         exit 1
     fi
 }
@@ -145,12 +146,12 @@ name_required() {
 # Test ssh connection to the target server
 test_target_connectivity() {
     if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "exit"; then
-        log 1 2 "Unable to ssh to $REMOTE_USER@$REMOTE_DOMAIN"
+        log 1 3 "Unable to ssh to $REMOTE_USER@$REMOTE_DOMAIN"
         exit 1
     fi
 
     if ! ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "borg --version" &>/dev/null; then
-        log 1 2 "borg not available on $REMOTE_DOMAIN"
+        log 1 3 "borg not available on $REMOTE_DOMAIN"
         exit 1
     fi
 }

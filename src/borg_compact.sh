@@ -30,7 +30,7 @@ borg_compact() {
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}" >>"$LOG_FILE" 2>&1; then
-        log 1 2 "Failed to compact repo $BORG_REPO"
+        log 1 3 "Failed to compact repo $BORG_REPO"
         exit 1
     fi
 
