@@ -19,7 +19,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_info() {
-    CMD=("borg" "info")
+    local CMD=("borg" "info")
+
+    local MSG
     MSG="repo $BORG_REPO"
 
     if [ "$NAME" ]; then

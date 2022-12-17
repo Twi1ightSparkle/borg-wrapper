@@ -20,8 +20,8 @@
 
 # Create a backup
 borg_create() {
-    BACKUP_NAME="$BACKUP_PREFIX$TIME_STAMP"
-    CMD=(
+    local BACKUP_NAME="$BACKUP_PREFIX$TIME_STAMP"
+    local CMD=(
         "borg"
         "create"
         "--info"

@@ -19,15 +19,15 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_mount() {
-    CMD=("borg" "mount")
+    local CMD=("borg" "mount")
 
-
+    local STR
     if [ -n "$NAME" ]; then
         CMD+=("$BORG_REPO::$NAME")
-        local STR="backup $BORG_REPO::$NAME"
+        STR="backup $BORG_REPO::$NAME"
     else
         CMD+=("$BORG_REPO")
-        local STR="backup repo $BORG_REPO"
+        STR="backup repo $BORG_REPO"
     fi
 
     log 1 0 "Mounting $STR to path $MOUNT_PATH"
@@ -40,7 +40,6 @@ borg_mount() {
     CMD+=("$MOUNT_PATH")
 
     log 0 0 "Running command: ${CMD[*]}"
-
     if ! "${CMD[@]}"; then
         log 1 0 "Failed to mount $STR to path $MOUNT_PATH"
         exit 1

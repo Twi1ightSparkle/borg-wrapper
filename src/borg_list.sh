@@ -19,7 +19,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_list() {
-    CMD=("borg" "list")
+    local CMD=("borg" "list")
+
+    local MSG
     MSG="Listing backups in repo $BORG_REPO"
 
     if [ "$NAME" ]; then
