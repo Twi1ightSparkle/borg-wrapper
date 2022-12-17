@@ -137,8 +137,15 @@ dry_run_notice() {
 }
 
 name_required() {
-    if [ ! "$NAME" ]; then
-        log 1 0 "backup_name option required for this command"
+    if [ -z "$NAME" ]; then
+        log 1 0 "--name option required for this command"
+        exit 1
+    fi
+}
+
+path_required() {
+    if [ -z "$MOUNT_PATH" ]; then
+        log 1 0 "--path option required for this command"
         exit 1
     fi
 }

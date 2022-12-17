@@ -19,24 +19,32 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_mount() {
-    CMD=(
-        "borg"
-        "mount"
-        "::$NAME"
-        "$PATH"
-    )
+    CMD=("borg" "mount")
 
-    log 1 0 "Mounting $BORG_REPO::$NAME to path $PATH"
-    if [ ! -d "$PATH" ]; then
-        log 1 0 "Error, mount directory $PATH does not exist"
+
+    if [ -n "$NAME" ]; then
+        CMD+=("$BORG_REPO::$NAME")
+        local STR="backup $BORG_REPO::$NAME"
+    else
+        CMD+=("$BORG_REPO")
+        local STR="backup repo $BORG_REPO"
+    fi
+
+    log 1 0 "Mounting $STR to path $MOUNT_PATH"
+
+    if [ ! -d "$MOUNT_PATH" ]; then
+        log 1 0 "Error, mount directory $MOUNT_PATH does not exist"
         exit 1
     fi
+
+    CMD+=("$MOUNT_PATH")
+
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Failed to mount $BORG_REPO::$NAME to path $PATH"
+        log 1 0 "Failed to mount $STR to path $MOUNT_PATH"
         exit 1
     fi
 
-    log 1 0 "Successfully mounted $BORG_REPO::$NAME to path $PATH"
+    log 1 0 "Successfully mounted $STR to path $MOUNT_PATH"
 }
