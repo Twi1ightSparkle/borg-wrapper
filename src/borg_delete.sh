@@ -19,7 +19,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_delete() {
-    CMD=(
+    local CMD=(
         "borg"
         "delete"
         "--info"
@@ -39,6 +39,7 @@ borg_delete() {
         exit 0
     fi
 
+    local MSG
     if [ "$NAME" ]; then
         CMD+=("::$NAME")
         MSG="backup $BORG_REPO::$NAME"

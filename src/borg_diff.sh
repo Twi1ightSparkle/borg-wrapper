@@ -19,7 +19,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_diff() {
-    CMD=(
+    local CMD=(
         "borg"
         "diff"
         "::$NAME"

@@ -20,13 +20,15 @@
 
 # Returns the current time stamp in format 2022-11-26T18:32:49.564Z
 iso_time_stamp() {
+    local DATE
     DATE="$(date -u "+%Y-%m-%dT%H:%M:%S")"
+    local NANOSECONDS
     NANOSECONDS="$(date "+%N")"
-    Z="Z"
+    local Z="Z"
     if [ "$NANOSECONDS" = "N" ]; then
         echo "$DATE$Z"
     else
-        MILLISECONDS="${NANOSECONDS:0:3}"
+        local MILLISECONDS="${NANOSECONDS:0:3}"
         echo "$DATE.$MILLISECONDS$Z"
     fi
 }
@@ -36,7 +38,7 @@ iso_time_stamp() {
 # 2: Message content
 webhook() {
     if [ "$WEBHOOK_ENABLED" = "true" ]; then
-        PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
+        local PAYLOAD="{\"notify\":$1,\"text\":\"**$HOSTNAME:** $2\"}"
         {
             echo "$(iso_time_stamp) Sending payload $PAYLOAD to $WEBHOOK_URL"
             curl \
@@ -67,11 +69,11 @@ test_webhook() {
 #    2 always log to webhook, 3 also @room with webhook
 # 3: The text to log
 log() {
-    PRINT="$1"
-    HOOK="$2"
-    MESSAGE="$3"
+    local PRINT="$1"
+    local HOOK="$2"
+    local MESSAGE="$3"
     # Replace all newlines (\n) with a space
-    MESSAGE_ONE_LINE=${MESSAGE//\\n/ }
+    local MESSAGE_ONE_LINE=${MESSAGE//\\n/ }
 
     echo "$(iso_time_stamp) $MESSAGE_ONE_LINE" >>"$LOG_FILE"
 
@@ -89,7 +91,7 @@ log() {
 # Make sure required env options are set
 check_required_env() {
     log 0 0 "Checking if required variables are set"
-    MISSING=""
+    local MISSING=""
 
     if [ ! "$TARGET_DIRECTORY" ]; then MISSING+="\nTARGET_DIRECTORY "; fi
 
@@ -111,13 +113,13 @@ check_required_env() {
 
 # Make sure required programs are installed
 check_required_programs() {
-    PROGRAMS=(bash borg cat cd chmod date dirname echo hostname ls read xargs)
+    local PROGRAMS=(bash borg cat cd chmod date dirname echo hostname ls read xargs)
 
     if [ "$REMOTE" = "true" ]; then PROGRAMS+=(ssh); fi
     if [ "$WEBHOOK_ENABLED" = "true" ]; then PROGRAMS+=(curl); fi
 
     log 0 0 "Checking if required programs are installed"
-    MISSING=""
+    local MISSING=""
     for PROGRAM in "${PROGRAMS[@]}"; do
         if ! hash "$PROGRAM" &>/dev/null; then
             MISSING+="\n$PROGRAM "

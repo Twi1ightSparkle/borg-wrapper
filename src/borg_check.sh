@@ -19,11 +19,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 borg_check() {
-    CMD=(
+    local CMD=(
         "borg"
         "check"
         "--show-rc"
     )
+
+    local MSG
     MSG="repo $BORG_REPO"
 
     if [ "$NAME" ]; then

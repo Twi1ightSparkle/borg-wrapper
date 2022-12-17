@@ -20,7 +20,7 @@
 
 # Initialize borg backup repo.
 borg_init() {
-    CMD=(
+    local CMD=(
         "borg"
         "init"
         "--show-rc"
@@ -30,7 +30,7 @@ borg_init() {
     log 1 1 "Initializing new borg repo $BORG_REPO"
 
     # Checks
-    ERRORS=""
+    local ERRORS=""
 
     # Error if keyfile path already exists
     if [ -f "$BORG_KEY_FILE" ]; then
@@ -38,6 +38,7 @@ borg_init() {
     fi
 
     # Error if the target directory is not empty
+    local RESULT
     if [ "$REMOTE" = "true" ]; then
         if ! RESULT="$(ssh -i "$REMOTE_SSH_PRIVKEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_DOMAIN" "ls -A \"$TARGET_DIRECTORY\"" 2>/dev/null)"; then
             RESULT=""

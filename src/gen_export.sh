@@ -24,7 +24,7 @@ gen_export() {
         exit 0
     fi
 
-    STRING="$PROGRAM_NAME
+    local STRING="$PROGRAM_NAME
 
 To manually run borg commands, copy the below export commands and paste them into your shell.
 Note the leading space. This prevents the command from being saved on your history in many shells.

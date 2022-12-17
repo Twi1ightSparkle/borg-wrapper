@@ -21,7 +21,7 @@
 # Params:
 # 1: true to ignore --live requirement
 borg_prune() {
-    CMD=(
+    local CMD=(
         "borg"
         "prune"
         "--info"
