@@ -74,5 +74,23 @@ borg_init() {
         log 1 3 "Unable to set permissions of $BACKUP_PASSPHRASE_FILE. Manually set its permissions to 600"
     fi
 
-    log 1 2 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the key file $BORG_KEY_FILE"
+    log 1 2 "Successfully initiated borg repo $BORG_REPO.\nMake sure to backup your passphrase and the keyfile"
+
+    cat <<EOF
+
+██╗███╗   ███╗██████╗  ██████╗ ██████╗ ████████╗ █████╗ ███╗   ██╗████████╗██╗
+██║████╗ ████║██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗████╗  ██║╚══██╔══╝██║
+██║██╔████╔██║██████╔╝██║   ██║██████╔╝   ██║   ███████║██╔██╗ ██║   ██║   ██║
+██║██║╚██╔╝██║██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║╚██╗██║   ██║   ╚═╝
+██║██║ ╚═╝ ██║██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║██║ ╚████║   ██║   ██╗
+╚═╝╚═╝     ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝
+
+Back up your keyfile and passphrase. Without these two, you will not be able to access your backups.
+
+- Keyfile location: $BORG_KEY_FILE
+
+- Passphrase file location: $BACKUP_PASSPHRASE_FILE
+
+Test that you can access and restore your backups. Ideally, also from another computer.
+EOF
 }
