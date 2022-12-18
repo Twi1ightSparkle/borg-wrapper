@@ -32,7 +32,8 @@ Borg documentation: <https://borgbackup.readthedocs.io/en/stable/>
 - Add a secure passphrase to the first line of the `borg_passphrase` file
 - Edit `exclude.txt` and `include.txt` with your requirements. One entry per line
 - From the root of the repo, run `./borg-wrapper.sh --init` to initialize the repo
-- Use crontab (or the scheduler of your choice) to run `./borg-wrapper.sh --backup --automated --live` periodically
+- Use crontab (or the scheduler of your choice) to run `./borg-wrapper.sh --backup --automated --live` periodically.
+See `crontab_example` for an example configuration
 - If you need to run multiple profiles, you can use the `--config` option to specify a different config directory
 
 See [src/help.sh](https://github.com/Twi1ightSparkle/borg/blob/main/src/help.sh) for all command line options.
@@ -77,3 +78,11 @@ the Transformation JavaScript from `hookshot_webhook_js_transformation.js` to en
 sure you give the webhook appservice user permissions to @room. However, this should work with any webhook reader that
 accepts unauthenticated `PUT` JSON requests with the key `text`. To edit the behavior, edit the `webhook` function in
 `src/utils.js` to fit your needs.
+
+## Mac
+
+On Mac, you must give `cron` full disk access.
+
+- In the terminal, enter `open /usr/sbin`
+- Go to `System Settings` -> `Privacy & Seurity` -> `Full Disk Access`
+- From Finder, drag `cron` into the `Full Disk Access` window
