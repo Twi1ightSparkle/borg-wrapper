@@ -25,7 +25,6 @@ borg_create() {
         "borg"
         "create"
         "--info"
-        "--one-file-system"
         "--warning"
         "--filter" "AME"
         "--show-rc"
@@ -33,6 +32,10 @@ borg_create() {
         "--exclude-caches"
         "--exclude-from" "$EXCLUDE_FILE"
     )
+
+    if [ "$ONE_FILE_SYSTEM" = true ]; then
+        CMD+=("--one-file-system")
+    fi
 
     if [ "$LIVE" != true ]; then
         CMD+=("--dry-run")
