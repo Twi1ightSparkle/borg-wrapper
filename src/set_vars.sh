@@ -29,6 +29,7 @@ if [ ! "$KEEP_MONTHLY" ];      then KEEP_MONTHLY=12;                 fi
 if [ ! "$KEEP_WEEKLY" ];       then KEEP_WEEKLY=4;                   fi
 if [ ! "$KEEP_WITHIN" ];       then KEEP_WITHIN=24H;                 fi
 if [ ! "$KEEP_YEARLY" ];       then KEEP_YEARLY=-1;                  fi
+if [ ! "$KEYFILE_IN_REPO" ];   then KEYFILE_IN_REPO=false;           fi
 if [ ! "$LOG_FILE" ];          then LOG_FILE="$CONFIG_DIR/borg.log"; fi
 if [ ! "$ONE_FILE_SYSTEM" ];   then ONE_FILE_SYSTEM=true;            fi
 if [ ! "$PRUNE_ON_BACKUP" ];   then PRUNE_ON_BACKUP=true;            fi
@@ -59,9 +60,13 @@ export EXCLUDE_FILE
 export INCLUDE_FILE
 
 if [ "$KEYFILE" ]; then
-    export BORG_KEY_FILE="$KEYFILE"
+    export BORG_KEY_FILE_PATH="$KEYFILE"
 else
-    export BORG_KEY_FILE="$CONFIG_DIR/keyfile";
+    export BORG_KEY_FILE_PATH="$CONFIG_DIR/keyfile";
+fi
+
+if [ "$KEYFILE_IN_REPO" != "true" ]; then
+    export BORG_KEY_FILE="$BORG_KEY_FILE_PATH"
 fi
 
 # Export borg environment options
@@ -75,7 +80,7 @@ fi
 
 BORG_PASSPHRASE="$(head -n 1 "$BACKUP_PASSPHRASE_FILE")"
 if [ ! "$BORG_PASSPHRASE" ];
-    then echo "Your passphrase cannot be empty. Add a secure passphrase to $BORG_PASSPHRASE"
+    then echo "Your passphrase cannot be empty. Add a secure passphrase to $BACKUP_PASSPHRASE_FILE"
     exit 1
 fi
 export BORG_PASSPHRASE

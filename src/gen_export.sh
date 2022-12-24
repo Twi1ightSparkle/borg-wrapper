@@ -29,9 +29,12 @@ gen_export() {
 To manually run borg commands, copy the below export commands and paste them into your shell.
 Note the leading space. This prevents the command from being saved on your history in many shells.
 
- export BORG_KEY_FILE=\"$BORG_KEY_FILE\"
  export BORG_PASSPHRASE=\"$BORG_PASSPHRASE\"
  export BORG_REPO=\"$BORG_REPO\""
+
+    if [ "$KEYFILE_IN_REPO" != "true" ]; then
+        STRING+="\n export BORG_KEY_FILE=\"$BORG_KEY_FILE_PATH\""
+    fi
 
     if [ "$REMOTE" = "true" ]; then
         STRING+="\n export BORG_RSH=\"$BORG_RSH\""

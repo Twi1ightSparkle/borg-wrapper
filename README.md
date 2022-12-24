@@ -175,6 +175,13 @@ These options are optional. If not set, the default will be used.
         </td>
     </tr>
     <tr>
+        <td><code>KEYFILE_IN_REPO</code></td>
+        <td><code>false</code></td>
+        <td>
+            Store the backup keyfile unencrypted in the backup repo
+        </td>
+    </tr>
+    <tr>
         <td><code>LOG_FILE</code></td>
         <td><code>configDirectory/ borg.log</code></td>
         <td>Full path to the script log file</td>

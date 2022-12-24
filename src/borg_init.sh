@@ -24,17 +24,21 @@ borg_init() {
         "borg"
         "init"
         "--show-rc"
-        "--encryption" "keyfile-blake2"
     )
 
     log 1 1 "Initializing new borg repo $BORG_REPO"
 
+    if [ "$KEYFILE_IN_REPO" = "true" ]; then
+        CMD+=("--encryption" "repokey-blake2")
+    else
+        CMD+=("--encryption" "keyfile-blake2")
+    fi
+
     # Checks
     local ERRORS=""
-
     # Error if keyfile path already exists
-    if [ -f "$BORG_KEY_FILE" ]; then
-        ERRORS+="\n- Keyfile $BORG_KEY_FILE already exists."
+    if [ -f "$BORG_KEY_FILE_PATH" ]; then
+        ERRORS+="\n- Keyfile $BORG_KEY_FILE_PATH already exists."
     fi
 
     # Error if the target directory is not empty
@@ -64,9 +68,31 @@ borg_init() {
         exit 1
     fi
 
+    local KEYFILE_STRING
+
+    # Export key from repo
+    if [ "$KEYFILE_IN_REPO" = "true" ]; then
+        local EXPORT_CMD=(
+            "borg"
+            "key"
+            "export"
+            "$BORG_REPO"
+            "$BORG_KEY_FILE_PATH"
+        )
+
+        log 0 0 "Running command: ${EXPORT_CMD[*]}"
+        if ! "${EXPORT_CMD[@]}" >>"$LOG_FILE" 2>&1; then
+            log 1 3 "Error exporting key from $BORG_REPO"
+        fi
+
+        KEYFILE_STRING="Keyfile backup location"
+    else
+        KEYFILE_STRING="Keyfile location"
+    fi
+
     # Protect the keyfile
-    if ! chmod 600 "$BORG_KEY_FILE"; then
-        log 1 3 "Unable to set permissions of $BORG_KEY_FILE. Manually set its permissions to 600"
+    if ! chmod 600 "$BORG_KEY_FILE_PATH"; then
+        log 1 3 "Unable to set permissions of $BORG_KEY_FILE_PATH. Manually set its permissions to 600"
     fi
 
     # Protect the passphrase file
@@ -87,7 +113,7 @@ borg_init() {
 
 Back up your keyfile and passphrase. Without these two, you will not be able to access your backups.
 
-- Keyfile location: $BORG_KEY_FILE
+- $KEYFILE_STRING: $BORG_KEY_FILE_PATH
 
 - Passphrase file location: $BACKUP_PASSPHRASE_FILE
 
