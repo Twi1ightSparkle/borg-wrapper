@@ -24,9 +24,9 @@ borg_info() {
     local MSG
     MSG="repo $BORG_REPO"
 
-    if [ "$NAME" ]; then
-        CMD+=("::$NAME")
-        MSG="backup $BORG_REPO::$NAME"
+    if [ "$BORG_NAME" ]; then
+        CMD+=("::$BORG_NAME")
+        MSG="backup $BORG_REPO::$BORG_NAME"
     fi
 
     log 1 0 "Detailed info about $MSG"

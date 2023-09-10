@@ -22,9 +22,9 @@ borg_mount() {
     local CMD=("borg" "mount")
 
     local STR
-    if [ -n "$NAME" ]; then
-        CMD+=("$BORG_REPO::$NAME")
-        STR="backup $BORG_REPO::$NAME"
+    if [ -n "$BORG_NAME" ]; then
+        CMD+=("$BORG_REPO::$BORG_NAME")
+        STR="backup $BORG_REPO::$BORG_NAME"
     else
         CMD+=("$BORG_REPO")
         STR="backup repo $BORG_REPO"

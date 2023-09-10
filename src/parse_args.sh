@@ -52,7 +52,7 @@ while [ "$#" -gt 0 ]; do
         --live)             LIVE=true;              shift        ;;
         -a | --automated)   export AUTOMATED=true;  shift        ;;
         -C | --config)      export CONFIG_DIR="$2"; shift; shift ;;
-        -n | --name)        export NAME="$2";       shift; shift ;;
+        -n | --name)        export BORG_NAME="$2";       shift; shift ;;
         -P | --path)        export MOUNT_PATH="$2"; shift; shift ;;
 
         # Catch unknown arguments
