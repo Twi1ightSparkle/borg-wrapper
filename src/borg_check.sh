@@ -28,9 +28,9 @@ borg_check() {
     local MSG
     MSG="repo $BORG_REPO"
 
-    if [ "$NAME" ]; then
-        CMD+=("::$NAME")
-        MSG="backup $BORG_REPO::$NAME"
+    if [ "$BORG_NAME" ]; then
+        CMD+=("::$BORG_NAME")
+        MSG="backup $BORG_REPO::$BORG_NAME"
     fi
 
     log 1 1 "Verifying the consistency of $MSG"

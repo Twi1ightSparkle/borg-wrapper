@@ -22,15 +22,15 @@ borg_diff() {
     local CMD=(
         "borg"
         "diff"
-        "::$NAME"
+        "::$BORG_NAME"
         "$MOUNT_PATH"
     )
 
-    log 1 0 "Listing differences between $NAME and $MOUNT_PATH in $BORG_REPO"
+    log 1 0 "Listing differences between $BORG_NAME and $MOUNT_PATH in $BORG_REPO"
     log 0 0 "Running command: ${CMD[*]}"
 
     if ! "${CMD[@]}"; then
-        log 1 0 "Error listing differences between $NAME and $MOUNT_PATH in $BORG_REPO"
+        log 1 0 "Error listing differences between $BORG_NAME and $MOUNT_PATH in $BORG_REPO"
         exit 1
     fi
 }

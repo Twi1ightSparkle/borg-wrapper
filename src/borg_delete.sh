@@ -35,9 +35,9 @@ borg_delete() {
 
 
     local MSG
-    if [ "$NAME" ]; then
-        CMD+=("::$NAME")
-        MSG="backup $BORG_REPO::$NAME"
+    if [ "$BORG_NAME" ]; then
+        CMD+=("::$BORG_NAME")
+        MSG="backup $BORG_REPO::$BORG_NAME"
     else
         CMD+=("--glob-archives" "$BACKUP_PREFIX*")
         MSG="backups matching $BORG_REPO::$BACKUP_PREFIX*"

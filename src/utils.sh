@@ -139,7 +139,7 @@ dry_run_notice() {
 }
 
 name_required() {
-    if [ -z "$NAME" ]; then
+    if [ -z "$BORG_NAME" ]; then
         log 1 0 "--name option required for this command"
         exit 1
     fi

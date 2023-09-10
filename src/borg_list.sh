@@ -24,9 +24,9 @@ borg_list() {
     local MSG
     MSG="Listing backups in repo $BORG_REPO"
 
-    if [ "$NAME" ]; then
-        CMD+=("::$NAME")
-        MSG="Listing files in backup $BORG_REPO::$NAME"
+    if [ "$BORG_NAME" ]; then
+        CMD+=("::$BORG_NAME")
+        MSG="Listing files in backup $BORG_REPO::$BORG_NAME"
     fi
 
     log 1 0 "$MSG"
