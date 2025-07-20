@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Borg wrapper. An (almost) no-dependency wrapper script for basic Borg backup features.
-# Copyright (C) 2022  Twilight Sparkle
+# Copyright (C) 2022-2025  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 PROGRAM_NAME="Borg wrapper"
-PROGRAM_VERSION="v0.4.1-beta"
+PROGRAM_VERSION="v0.4.2-beta"
 export PROGRAM_NAME
 export PROGRAM_VERSION
 

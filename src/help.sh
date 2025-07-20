@@ -3,7 +3,7 @@
 # This script cannot be run on it's own. From the repo root, run ./borg-wrapper.sh
 
 # Borg wrapper. An (almost) no-dependency wrapper script for basic Borg backup features.
-# Copyright (C) 2022  Twilight Sparkle
+# Copyright (C) 2022-2025  Twilight Sparkle
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -37,6 +37,7 @@ commands:
     -I, --init         Initialize a new backup repository
     -l, --list         List all backups. Specify the --name option to list files in a specific backup
     -m, --mount        Mount repo. --path must be specified. Optionally set --name to mount a specific backup.
+                       You must add "user_allow_other" to /etc/fuse.conf to use --mount
     -p, --prune        Prunes the repository by deleting all archives not
                        matching any of the specified retention options
     -t, --testhook     Test webhook (if enabled in the config)
